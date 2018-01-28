@@ -142,48 +142,83 @@ void automogoup()
 	mogostop();
 }
 
-
-
-void driveStraightDistance(int in, int masterPower)
+void moveForward(int amount,int power)
 {
-	int tickGoal = (42 * in);
 
-	int totalTicks = 0;
-
-	int slavePower = masterPower - 5;
-
-	int error = 0;
-
-	int kp = 5;
-
-	SensorValue[leftEncoder] = 0;
 	SensorValue[rightEncoder] = 0;
+	SensorValue[leftEncoder] = 0;
+	while(abs(SensorValue[rightEncoder]) < amount && (abs(SensorValue[leftEncoder]) < amount))
+	{
+		motor[DriveR] = power;
+		motor[DriveR] = power;
 
 
-	while (sgn(tickGoal) == 1 && totalTicks < tickGoal || sgn(tickGoal) == -1 && totalTicks > tickGoal) {
-		//(abs(totalTicks) < tickGoal)
-
-
-		motor[DriveR] = masterPower;
-		motor[DriveL] = slavePower;
-
-		error = SensorValue[leftEncoder] - SensorValue[rightEncoder];
-
-		slavePower += error / kp;
-		/*
-		SensorValue[leftEncoder] = 0;
-		SensorValue[rightEncoder] = 0;
-		*/
-
-		wait1Msec(100);
-
-		totalTicks += SensorValue[leftEncoder];
 	}
-	motor[DriveR] = masterPower;
-	motor[DriveL] = slavePower;
-
+	motor[DriveR] = 0;
+	motor[DriveR] = 0;
+	SensorValue[rightEncoder] = 0;
+	SensorValue[leftEncoder] = 0;
 }
 
+void moveBackward(int amount,int power)
+{
+	SensorValue[rightEncoder] = 0;
+	SensorValue[leftEncoder] = 0;
+	while(abs(SensorValue[rightEncoder]) < amount && (abs(SensorValue[leftEncoder]) < amount))
+	{
+		motor[DriveR] = -power;
+		motor[DriveR] = -power;
+	}
+
+	motor[DriveR] = 0;
+	motor[DriveR] = 0;
+	SensorValue[rightEncoder] = 0;
+	SensorValue[leftEncoder] = 0;
+}
+
+
+
+/*
+void driveStraightDistance(int in, int masterPower)
+{
+int tickGoal = (42 * in);
+
+int totalTicks = 0;
+
+int slavePower = masterPower - 5;
+
+int error = 0;
+
+int kp = 5;
+
+SensorValue[leftEncoder] = 0;
+SensorValue[rightEncoder] = 0;
+
+
+while (sgn(tickGoal) == 1 && totalTicks < tickGoal || sgn(tickGoal) == -1 && totalTicks > tickGoal) {
+//(abs(totalTicks) < tickGoal)
+
+
+motor[DriveR] = masterPower;
+motor[DriveL] = slavePower;
+
+error = SensorValue[leftEncoder] - SensorValue[rightEncoder];
+
+slavePower += error / kp;
+/*
+SensorValue[leftEncoder] = 0;
+SensorValue[rightEncoder] = 0;
+
+
+wait1Msec(100);
+
+totalTicks += SensorValue[leftEncoder];
+}
+motor[DriveR] = masterPower;
+motor[DriveL] = slavePower;
+
+}
+*/
 
 //LCD Auton
 
@@ -309,9 +344,8 @@ void pre_auton()
 
 void encoderprac()
 {
-	driveStraightDistance(12, 127);
-	stopbase();
-	driveStraightDistance(-3, 127);
+	moveForward(12, 127);
+	moveForward(-3, 127);
 
 	/*wait1Msec(100);
 	driveStraightDistance(-12, 127);
@@ -323,7 +357,7 @@ void auton() //left side prac
 
 {
 	//automogodown();
-	driveStraightDistance(16, 127); //work on this more... continue when bot is optimized at opc :D
+	//driveStraightDistance(16, 127); //work on this more... continue when bot is optimized at opc :D
 
 	//automogodown();
 	drive(127, 2000);
@@ -392,9 +426,11 @@ task autonomous()
 		displayLCDCenteredString(0, "LeftMogo Auton");
 		displayLCDCenteredString(1, "is running!");
 		wait1Msec(100);
-		driveStraightDistance(12, 127);
+		moveForward(500, 127);
+		moveBackward(500, 127);
+		//driveStraightDistance(12, 127);
 		stopAllMotors();
-		driveStraightDistance(-12, -127);
+		//driveStraightDistance(-12, -127);
 		//driveStraightDistance(1, 127);
 		/*
 		wait1Msec(500);
@@ -413,7 +449,7 @@ task autonomous()
 		wait1Msec(500);
 		stopMotor(Intake);
 		driveStraightDistance(-20, -127);
-		turnLeft(600, 127); ///////////
+		turnLeft(600, 127);
 		driveStraightDistance(14, 127);
 		mogodown();
 		wait1Msec(1000);
@@ -431,30 +467,30 @@ task autonomous()
 		displayLCDCenteredString(1, "is running!");
 
 		wait1Msec(100);
-		driveStraightDistance(4, 127);
-		driveStraightDistance(-3, -127);
+		//driveStraightDistance(4, 127);
+		//driveStraightDistance(-3, -127);
 		maniup();
 		mogodown();
 		wait1Msec(1000);
 		mogostop();
-		driveStraightDistance(48, 127);
+		//driveStraightDistance(48, 127);
 		mogoup();
 		wait1Msec(1200);
 		mogostop();
 		motor[Intake] = -127;
 		wait1Msec(400);
 		stopMotor(Intake);
-		driveStraightDistance(-43, -127);
+		//driveStraightDistance(-43, -127);
 		turnRight(600, 127);
-		driveStraightDistance(14, 127);
+		//driveStraightDistance(14, 127);
 		mogodown();
 		wait1Msec(1000);
 		mogostop();
-		driveStraightDistance(-2, -127);
+		//driveStraightDistance(-2, -127);
 		mogoup();
 		wait1Msec(1000);
 		mogostop();
-		driveStraightDistance(-10, -127);
+		//driveStraightDistance(-10, -127);
 
 		break;
 	case 2:

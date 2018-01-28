@@ -131,13 +131,6 @@ void automogodown()
 		mogodown();
 	}
 	mogostop();
-	/*
-	while(SensorValue(mogopot) > 400)
-	{
-	mogodown();
-	}
-	mogostop();
-	*/
 }
 
 void automogoup()

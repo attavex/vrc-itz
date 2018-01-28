@@ -159,6 +159,7 @@ void driveStraightDistance(int in, int masterPower)
 	SensorValue[leftEncoder] = 0;
 	SensorValue[rightEncoder] = 0;
 
+
 	while (sgn(tickGoal) == 1 && totalTicks < tickGoal || sgn(tickGoal) == -1 && totalTicks > tickGoal) {
 		//(abs(totalTicks) < tickGoal)
 
@@ -391,9 +392,10 @@ task autonomous()
 		displayLCDCenteredString(0, "LeftMogo Auton");
 		displayLCDCenteredString(1, "is running!");
 		wait1Msec(100);
-		driveStraightDistance(1, 127);
-		driveStraightDistance(-2, -127);
-		driveStraightDistance(1, 127);
+		driveStraightDistance(12, 127);
+		stopAllMotors();
+		driveStraightDistance(-12, -127);
+		//driveStraightDistance(1, 127);
 		/*
 		wait1Msec(500);
 		stopAllMotors();

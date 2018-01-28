@@ -142,7 +142,7 @@ void automogoup()
 	mogostop();
 }
 
-void moveForward(int amount,int power)
+void moveForward(int amount,int power) //ABOUT 22 TICKS PER INCH
 {
 
 	SensorValue[rightEncoder] = 0;
@@ -150,12 +150,12 @@ void moveForward(int amount,int power)
 	while(abs(SensorValue[rightEncoder]) < amount && (abs(SensorValue[leftEncoder]) < amount))
 	{
 		motor[DriveR] = power;
-		motor[DriveR] = power;
+		motor[DriveL] = power;
 
 
 	}
 	motor[DriveR] = 0;
-	motor[DriveR] = 0;
+	motor[DriveL] = 0;
 	SensorValue[rightEncoder] = 0;
 	SensorValue[leftEncoder] = 0;
 }
@@ -167,11 +167,11 @@ void moveBackward(int amount,int power)
 	while(abs(SensorValue[rightEncoder]) < amount && (abs(SensorValue[leftEncoder]) < amount))
 	{
 		motor[DriveR] = -power;
-		motor[DriveR] = -power;
+		motor[DriveL] = -power;
 	}
 
 	motor[DriveR] = 0;
-	motor[DriveR] = 0;
+	motor[DriveL] = 0;
 	SensorValue[rightEncoder] = 0;
 	SensorValue[leftEncoder] = 0;
 }
@@ -426,8 +426,8 @@ task autonomous()
 		displayLCDCenteredString(0, "LeftMogo Auton");
 		displayLCDCenteredString(1, "is running!");
 		wait1Msec(100);
-		moveForward(500, 127);
-		moveBackward(500, 127);
+		moveForward(1500, 127);
+		//moveBackward(500, 127);
 		//driveStraightDistance(12, 127);
 		stopAllMotors();
 		//driveStraightDistance(-12, -127);

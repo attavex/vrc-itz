@@ -176,9 +176,10 @@ void driveStraightDistance(int in, int masterPower)
 		error = SensorValue[leftEncoder] - SensorValue[rightEncoder];
 
 		slavePower += error / kp;
-
+		/*
 		SensorValue[leftEncoder] = 0;
 		SensorValue[rightEncoder] = 0;
+		*/
 
 		wait1Msec(100);
 

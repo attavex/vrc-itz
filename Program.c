@@ -565,16 +565,6 @@ task usercontrol()
 			motor[LMOGO] = -127;
 			motor[RMOGO] = 127;
 		}
-		/*
-		else if (vexRT[Btn5UXmtr2] == 1){ //for high stacks
-		motor[LMOGO] = 90;
-		motor[RMOGO] = -90;
-		}
-		else if (vexRT[Btn5DXmtr2] == 1){
-		motor[LMOGO] = -90;
-		motor[RMOGO] = 90;
-		}
-		*/
 		else if (vexRT[Btn7R] == 1){ //main
 			motor[LMOGO] = 127;
 			motor[RMOGO] = -127;
@@ -629,18 +619,18 @@ task usercontrol()
 		else {
 			motor[Intake] = 27;
 		}
-
+		/*
 		//encoder prac
 		if(vexRT[Btn8U] == 1) {
-			encoderprac();
+		encoderprac();
 		}
 
 		//automogoprac
 		if(vexRT[Btn8D] == 1) {
-			automogodown();
+		automogodown();
 		}
 
-
+		*/
 
 	}
 }

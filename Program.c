@@ -426,7 +426,7 @@ task autonomous()
 		displayLCDCenteredString(0, "LeftMogo Auton");
 		displayLCDCenteredString(1, "is running!");
 		wait1Msec(100);
-		motor[Intake] = 30;
+		motor[Intake] = 20;
 		moveForward(700, 127);
 		moveBackward(500, 127);
 		wait1Msec(500);
@@ -463,30 +463,36 @@ task autonomous()
 		displayLCDCenteredString(1, "is running!");
 
 		wait1Msec(100);
-		//driveStraightDistance(4, 127);
-		//driveStraightDistance(-3, -127);
+		
+		motor[Intake] = 20;
+		moveForward(700, 127);
+		moveBackward(500, 127);
+		wait1Msec(500);
 		maniup();
+		wait1Msec(500);
 		mogodown();
-		wait1Msec(1000);
+		wait1Msec(1500);
 		mogostop();
-		//driveStraightDistance(48, 127);
+		moveForward(1034, 127);
 		mogoup();
-		wait1Msec(1200);
+		wait1Msec(1700);
 		mogostop();
 		motor[Intake] = -127;
-		wait1Msec(400);
+		wait1Msec(500);
 		stopMotor(Intake);
-		//driveStraightDistance(-43, -127);
-		turnRight(600, 127);
-		//driveStraightDistance(14, 127);
+		moveBackward(660, 127);
+		turnLeft(600, 127);
+		moveForward(110, 127);
+		turnLeft(700, 127);
+		moveForward(528, 127);
 		mogodown();
 		wait1Msec(1000);
 		mogostop();
-		//driveStraightDistance(-2, -127);
+		moveBackward(44, 127);
 		mogoup();
 		wait1Msec(1000);
 		mogostop();
-		//driveStraightDistance(-10, -127);
+		moveBackward(660, 127);
 
 		break;
 	case 2:

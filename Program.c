@@ -69,12 +69,9 @@ void turnleft(int time, int speed)
 	leftBase(-speed);
 	rightBase(speed);
 	wait1Msec(time);
-	motor[DriveR] = 0; //test
-	motor[DriveL] = 0;
-	/*
 	stopMotor(DriveR);
 	stopMotor(DriveL);
-	*/
+
 }
 
 void mogodown()
@@ -425,27 +422,29 @@ task autonomous()
 		//If count = 0, run left side mogo
 		displayLCDCenteredString(0, "LeftMogo Auton");
 		displayLCDCenteredString(1, "is running!");
-		wait1Msec(100);
-		motor[Intake] = 20;
-		moveForward(700, 127);
-		moveBackward(500, 127);
+		wait1Msec(10);
+		motor[Intake] = -30;
+		moveForward(44, 127);
+		moveBackward(22, 127);
 		wait1Msec(500);
 		maniup();
 		wait1Msec(500);
 		mogodown();
 		wait1Msec(1500);
 		mogostop();
-		moveForward(1034, 127);
+		moveForward(1200, 127);
 		mogoup();
 		wait1Msec(1700);
 		mogostop();
+		wait1Msec(800);
 		motor[Intake] = -127;
 		wait1Msec(500);
 		stopMotor(Intake);
 		moveBackward(660, 127);
-		turnRight(600, 127);
-		moveForward(110, 127);
-		turnRight(700, 127);
+		wait1Msec(200);
+		turnright(1000, 127);
+		moveForward(750, 127);
+		turnright(425, 127);
 		moveForward(528, 127);
 		mogodown();
 		wait1Msec(1000);
@@ -461,29 +460,29 @@ task autonomous()
 		//If count = 1, run right side mogo
 		displayLCDCenteredString(0, "RightMogo Auton");
 		displayLCDCenteredString(1, "is running!");
-
-		wait1Msec(100);
-		
-		motor[Intake] = 20;
-		moveForward(700, 127);
-		moveBackward(500, 127);
+		wait1Msec(10);
+		motor[Intake] = -30;
+		moveForward(44, 127);
+		moveBackward(22, 127);
 		wait1Msec(500);
 		maniup();
 		wait1Msec(500);
 		mogodown();
 		wait1Msec(1500);
 		mogostop();
-		moveForward(1034, 127);
+		moveForward(1200, 127);
 		mogoup();
 		wait1Msec(1700);
 		mogostop();
+		wait1Msec(800);
 		motor[Intake] = -127;
 		wait1Msec(500);
 		stopMotor(Intake);
 		moveBackward(660, 127);
-		turnLeft(600, 127);
-		moveForward(110, 127);
-		turnLeft(700, 127);
+		wait1Msec(200);
+		turnleft(1000, 127);
+		moveForward(750, 127);
+		turnleft(425, 127);
 		moveForward(528, 127);
 		mogodown();
 		wait1Msec(1000);
@@ -651,13 +650,13 @@ task usercontrol()
 		//intake
 
 		if (vexRT[Btn7L] == 1){
-			motor[Intake] = -127;
-		}
-		else if (vexRT[Btn8R] == 1){
 			motor[Intake] = 127;
 		}
+		else if (vexRT[Btn8R] == 1){
+			motor[Intake] = -127;
+		}
 		else {
-			motor[Intake] = 27;
+			motor[Intake] = -27;
 		}
 		/*
 		//encoder prac

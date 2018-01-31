@@ -173,7 +173,15 @@ void moveBackward(int amount,int power)
 	SensorValue[leftEncoder] = 0;
 }
 
+void rightTurn(int amount, int power) 
+{
+	/// same opposite sides = power for turn
+}
 
+void leftTurn(int amount, int power) 
+{
+	/// same opposite sides as above = power for turn
+}
 
 /*
 void driveStraightDistance(int in, int masterPower)

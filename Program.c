@@ -430,7 +430,7 @@ task autonomous()
 		//If count = 0, run left side mogo
 		displayLCDCenteredString(0, "LeftMogo Auton");
 		displayLCDCenteredString(1, "is running!");
-		motor[Intake] = -30;
+		motor[Intake] = -40;
 		moveForward(44, 127);
 		moveBackward(22, 127);
 		maniup();
@@ -447,10 +447,10 @@ task autonomous()
 		stopMotor(Intake);
 		moveBackward(660, 127);
 		wait1Msec(200);
-		turnright(1000, 127);
+		turnright(850, 127);
 		moveForward(750, 127);
 		turnright(425, 127);
-		moveForward(528, 127);
+		moveForward(590, 127);
 		mogodown();
 		wait1Msec(1000);
 		mogostop();

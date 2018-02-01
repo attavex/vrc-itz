@@ -173,12 +173,12 @@ void moveBackward(int amount,int power)
 	SensorValue[leftEncoder] = 0;
 }
 
-void rightTurn(int amount, int power) 
+void rightTurn(int amount, int power)
 {
 	/// same opposite sides = power for turn
 }
 
-void leftTurn(int amount, int power) 
+void leftTurn(int amount, int power)
 {
 	/// same opposite sides as above = power for turn
 }
@@ -430,23 +430,20 @@ task autonomous()
 		//If count = 0, run left side mogo
 		displayLCDCenteredString(0, "LeftMogo Auton");
 		displayLCDCenteredString(1, "is running!");
-		wait1Msec(10);
 		motor[Intake] = -30;
 		moveForward(44, 127);
 		moveBackward(22, 127);
-		wait1Msec(500);
 		maniup();
-		wait1Msec(500);
 		mogodown();
-		wait1Msec(1500);
+		wait1Msec(1300);
 		mogostop();
 		moveForward(1200, 127);
 		mogoup();
-		wait1Msec(1700);
+		wait1Msec(1550);
 		mogostop();
-		wait1Msec(800);
+		wait1Msec(200);
 		motor[Intake] = -127;
-		wait1Msec(500);
+		wait1Msec(400);
 		stopMotor(Intake);
 		moveBackward(660, 127);
 		wait1Msec(200);

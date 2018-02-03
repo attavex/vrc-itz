@@ -447,10 +447,10 @@ task autonomous()
 		stopMotor(Intake);
 		moveBackward(660, 127);
 		wait1Msec(200);
-		turnright(850, 127);
-		moveForward(750, 127);
-		turnright(425, 127);
-		moveForward(590, 127);
+		turnleft(125, 127);
+		moveBackward(750, 127);
+		turnleft(500, 127);
+		moveForward(52, 127);
 		mogodown();
 		wait1Msec(1000);
 		mogostop();
@@ -641,10 +641,10 @@ task usercontrol()
 
 		//Mani(Main Controller)
 		if (vexRT[Btn5U] == 1){
-			motor[Mani] = -100;
+			motor[Mani] = -115;
 		}
 		else if (vexRT[Btn5D] == 1){
-			motor[Mani] = 100;
+			motor[Mani] = 115;
 		}
 		else
 		{
@@ -655,13 +655,13 @@ task usercontrol()
 		//intake
 
 		if (vexRT[Btn7L] == 1){
-			motor[Intake] = 127;
-		}
-		else if (vexRT[Btn8R] == 1){
 			motor[Intake] = -127;
 		}
+		else if (vexRT[Btn8R] == 1){
+			motor[Intake] = 127;
+		}
 		else {
-			motor[Intake] = -27;
+			motor[Intake] = 27;
 		}
 		/*
 		//encoder prac

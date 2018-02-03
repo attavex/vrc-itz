@@ -430,7 +430,7 @@ task autonomous()
 		//If count = 0, run left side mogo
 		displayLCDCenteredString(0, "LeftMogo Auton");
 		displayLCDCenteredString(1, "is running!");
-		motor[Intake] = -40;
+		motor[Intake] = 40;
 		moveForward(44, 127);
 		moveBackward(22, 127);
 		maniup();
@@ -445,12 +445,12 @@ task autonomous()
 		motor[Intake] = -127;
 		wait1Msec(400);
 		stopMotor(Intake);
-		moveBackward(660, 127);
+		moveBackward(1000, 127);
 		wait1Msec(200);
-		turnleft(125, 127);
-		moveBackward(750, 127);
-		turnleft(500, 127);
-		moveForward(52, 127);
+		turnleft(175, 127);
+		moveBackward(700, 127);
+		turnleft(940, 127);
+		moveForward(600, 127);
 		mogodown();
 		wait1Msec(1000);
 		mogostop();
@@ -465,38 +465,36 @@ task autonomous()
 		//If count = 1, run right side mogo
 		displayLCDCenteredString(0, "RightMogo Auton");
 		displayLCDCenteredString(1, "is running!");
-		wait1Msec(10);
-		motor[Intake] = -30;
+		motor[Intake] = 40;
 		moveForward(44, 127);
 		moveBackward(22, 127);
-		wait1Msec(500);
 		maniup();
-		wait1Msec(500);
 		mogodown();
-		wait1Msec(1500);
+		wait1Msec(1300);
 		mogostop();
 		moveForward(1200, 127);
 		mogoup();
-		wait1Msec(1700);
+		wait1Msec(1550);
 		mogostop();
-		wait1Msec(800);
-		motor[Intake] = -127;
-		wait1Msec(500);
-		stopMotor(Intake);
-		moveBackward(660, 127);
 		wait1Msec(200);
-		turnleft(1000, 127);
-		moveForward(750, 127);
-		turnleft(425, 127);
-		moveForward(528, 127);
+		motor[Intake] = -127;
+		wait1Msec(400);
+		stopMotor(Intake);
+		moveBackward(1000, 127);
+		wait1Msec(200);
+		turnright(175, 127);
+		moveBackward(700, 127);
+		turnright(940, 127);
+		moveForward(600, 127);
 		mogodown();
 		wait1Msec(1000);
 		mogostop();
-		moveBackward(44, 127);
+		moveBackward(300, 127);
 		mogoup();
 		wait1Msec(1000);
 		mogostop();
 		moveBackward(660, 127);
+
 
 		break;
 	case 2:
@@ -504,13 +502,9 @@ task autonomous()
 		displayLCDCenteredString(0, "Station Auton");
 		displayLCDCenteredString(1, "is running!");
 
-		wait1Msec(100);
 		setMotor(Intake, 127);
 		wait1Msec(500);
 		setMotor(Intake, 25);
-		//driveStraightDistance(1, 127);
-		//driveStraightDistance(-2, -127);
-		//	driveStraightDistance(1, 127);
 		drive(127, 400);
 		drive(-127, 300);
 		drive(127, 200);
@@ -521,7 +515,7 @@ task autonomous()
 		drive(127, 700);
 		wait1Msec(500);
 		setMotor(Mani, 127);
-		wait1Msec(4500);
+		wait1Msec(1500);
 		stopMotor(Mani);
 		wait1Msec(300);
 		liftdown(200, 127);

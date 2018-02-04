@@ -449,12 +449,12 @@ task autonomous()
 		wait1Msec(200);
 		turnleft(175, 127);
 		moveBackward(700, 127);
-		turnleft(940, 127);
+		turnleft(850, 127);
 		moveForward(600, 127);
 		mogodown();
 		wait1Msec(1000);
 		mogostop();
-		moveBackward(44, 127);
+		moveBackward(150, 127);
 		mogoup();
 		wait1Msec(1000);
 		mogostop();
@@ -547,7 +547,6 @@ task autonomous()
 	}
 }
 
-
 /*---------------------------------------------------------------------------*/
 /*                                                                           */
 /*                              User Control Task                            */
@@ -588,9 +587,11 @@ task usercontrol()
 		displayNextLCDString(mainBattery);
 		displayLCDCenteredString(1, "2831 : Caliber");
 
-		//Drive(2nd Controller)
+		//Drive
 		tank(vexRT[Ch3] + vexRT[Ch3Xmtr2], vexRT[Ch2] + vexRT[Ch2Xmtr2]); //setting tank drive for both controllers...
 		//adding values creates equal drive for both main and 2nd controller.
+		//arcadeControl(Ch3, Ch4, 15);
+
 
 
 

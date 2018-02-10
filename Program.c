@@ -175,12 +175,34 @@ void moveBackward(int amount,int power)
 
 void rightTurn(int amount, int power)
 {
-	/// same opposite sides = power for turn
+	SensorValue[rightEncoder] = 0;
+	SensorValue[leftEncoder] = 0;
+	while(abs(SensorValue[rightEncoder]) < amount && (abs(SensorValue[leftEncoder]) < amount))
+	{
+		motor[DriveR] = -power;
+		motor[DriveL] = power;
+	}
+
+	motor[DriveR] = 0;
+	motor[DriveL] = 0;
+	SensorValue[rightEncoder] = 0;
+	SensorValue[leftEncoder] = 0;
 }
 
 void leftTurn(int amount, int power)
 {
-	/// same opposite sides as above = power for turn
+	SensorValue[rightEncoder] = 0;
+	SensorValue[leftEncoder] = 0;
+	while(abs(SensorValue[rightEncoder]) < amount && (abs(SensorValue[leftEncoder]) < amount))
+	{
+		motor[DriveR] = power;
+		motor[DriveL] = -power;
+	}
+
+	motor[DriveR] = 0;
+	motor[DriveL] = 0;
+	SensorValue[rightEncoder] = 0;
+	SensorValue[leftEncoder] = 0;
 }
 
 /*
@@ -349,8 +371,11 @@ void pre_auton()
 
 void encoderprac()
 {
-	moveForward(12, 127);
-	moveForward(-3, 127);
+//	moveForward(12, 127);
+//	moveForward(-3, 127);
+	rightTurn(1000,127);
+	wait1Msec(500);
+	leftTurn(1000,127);
 
 	/*wait1Msec(100);
 	driveStraightDistance(-12, 127);
@@ -658,12 +683,12 @@ task usercontrol()
 		else {
 			motor[Intake] = 27;
 		}
-		/*
+
 		//encoder prac
 		if(vexRT[Btn8U] == 1) {
-		encoderprac();
+			encoderprac();
 		}
-
+		/*
 		//automogoprac
 		if(vexRT[Btn8D] == 1) {
 		automogodown();

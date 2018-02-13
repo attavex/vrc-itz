@@ -507,9 +507,9 @@ task autonomous()
 		stopMotor(Intake);
 		moveBackward(1000, 127);
 		wait1Msec(200);
-		turnright(175, 127);
+		rightTurn(300, 127);
 		moveBackward(700, 127);
-		turnright(940, 127);
+		rightTurn(850, 127);
 		moveForward(600, 127);
 		mogodown();
 		wait1Msec(1000);
@@ -610,7 +610,7 @@ task usercontrol()
 		displayLCDString(0, 0, "MainBat: ");
 		sprintf(mainBattery, "%1.2f%c", nImmediateBatteryLevel/1000.0,'V'); //Build the value to be displayed
 		displayNextLCDString(mainBattery);
-		displayLCDCenteredString(1, "2831 : Caliber");
+		displayLCDCenteredString(1, "2831 : Caliber 2.0");
 
 		//Drive
 		tank(vexRT[Ch3] + vexRT[Ch3Xmtr2], vexRT[Ch2] + vexRT[Ch2Xmtr2]); //setting tank drive for both controllers...

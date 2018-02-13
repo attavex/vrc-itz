@@ -661,10 +661,10 @@ task usercontrol()
 
 		//Mani(Main Controller)
 		if (vexRT[Btn5U] == 1){
-			motor[Mani] = -115;
+			motor[Mani] = -120;
 		}
 		else if (vexRT[Btn5D] == 1){
-			motor[Mani] = 115;
+			motor[Mani] = 120;
 		}
 		else
 		{
@@ -681,7 +681,7 @@ task usercontrol()
 			motor[Intake] = 127;
 		}
 		else {
-			motor[Intake] = 27;
+			motor[Intake] = 25;
 		}
 
 		//encoder prac

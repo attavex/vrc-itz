@@ -371,8 +371,8 @@ void pre_auton()
 
 void encoderprac()
 {
-//	moveForward(12, 127);
-//	moveForward(-3, 127);
+	//	moveForward(12, 127);
+	//	moveForward(-3, 127);
 	rightTurn(1000,127);
 	wait1Msec(500);
 	leftTurn(1000,127);
@@ -472,9 +472,9 @@ task autonomous()
 		stopMotor(Intake);
 		moveBackward(1000, 127);
 		wait1Msec(200);
-		turnleft(175, 127);
+		leftTurn(300, 127);
 		moveBackward(700, 127);
-		turnleft(850, 127);
+		leftTurn(850, 127);
 		moveForward(600, 127);
 		mogodown();
 		wait1Msec(1000);

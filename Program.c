@@ -683,7 +683,7 @@ task usercontrol()
 		}
 		else if (vexRT[Btn6D] == 1){
 			motor[leftLift] = -127;
-			motor[rightLift] = 98;
+			motor[rightLift] = 96;
 		}
 		else
 		{

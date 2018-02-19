@@ -595,6 +595,12 @@ void tank(int left_speed  , int right_speed) {
 	setMotor(DriveL , left_speed);
 	setMotor(DriveR , right_speed);
 }
+
+void arcade(int turn, int power) {
+    setMotor(DriveL, power + turn);
+    setMotor(DriveR, power - turn);
+
+}
 /*
 task holdLift()
 {
@@ -635,9 +641,10 @@ task usercontrol()
 		displayLCDCenteredString(1, "2831 : Caliber 2.0");
 
 		//Drive
-		tank(vexRT[Ch3] + vexRT[Ch3Xmtr2], vexRT[Ch2] + vexRT[Ch2Xmtr2]); //setting tank drive for both controllers...
+		//tank(vexRT[Ch3] + vexRT[Ch3Xmtr2], vexRT[Ch2] + vexRT[Ch2Xmtr2]); //setting tank drive for both controllers...
 		//adding values creates equal drive for both main and 2nd controller.
 		//arcadeControl(Ch3, Ch4, 15);
+		arcade(vexRT[Ch4], vexRT[Ch3]);
 
 
 
@@ -651,11 +658,11 @@ task usercontrol()
 			motor[LMOGO] = -127;
 			motor[RMOGO] = 127;
 		}
-		else if (vexRT[Btn7R] == 1){ //main
+		else if (vexRT[Btn7U] == 1){ //main
 			motor[LMOGO] = 127;
 			motor[RMOGO] = -127;
 		}
-		else if (vexRT[Btn8L] == 1){
+		else if (vexRT[Btn7L] == 1){
 			motor[LMOGO] = -127;
 			motor[RMOGO] = 127;
 		}
@@ -706,7 +713,7 @@ task usercontrol()
 
 		//intake
 
-		if (vexRT[Btn7L] == 1){
+		if (vexRT[Btn8D] == 1){
 			motor[Intake] = -127;
 		}
 		else if (vexRT[Btn8R] == 1){
@@ -715,7 +722,7 @@ task usercontrol()
 		else {
 			motor[Intake] = 25;
 		}
-
+/*
 		//encoder prac
 		if(vexRT[Btn8U] == 1) {
 			encoderprac();

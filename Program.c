@@ -597,8 +597,8 @@ void tank(int left_speed  , int right_speed) {
 }
 
 void arcade(int turn, int power) {
-    setMotor(DriveL, power + turn);
-    setMotor(DriveR, power - turn);
+	setMotor(DriveL, power + turn);
+	setMotor(DriveR, power - turn);
 
 }
 /*
@@ -658,11 +658,11 @@ task usercontrol()
 			motor[LMOGO] = -127;
 			motor[RMOGO] = 127;
 		}
-		else if (vexRT[Btn7U] == 1){ //main
+		else if (vexRT[Btn8U] == 1){ //main
 			motor[LMOGO] = 127;
 			motor[RMOGO] = -127;
 		}
-		else if (vexRT[Btn7L] == 1){
+		else if (vexRT[Btn8L] == 1){
 			motor[LMOGO] = -127;
 			motor[RMOGO] = 127;
 		}
@@ -685,19 +685,31 @@ task usercontrol()
 		*/
 
 		if (vexRT[Btn6U] == 1){
-			motor[leftLift] = 127;
+			motor[leftLift] = 125;
 			motor[rightLift] = -127;
+			SensorValue[liftpot] = 0;
 		}
 		else if (vexRT[Btn6D] == 1){
-			motor[leftLift] = -127;
-			motor[rightLift] = 93;
+			motor[leftLift] = -120;
+			motor[rightLift] = 75;
+			SensorValue[liftpot] = 0;
+		}
+
+		else if(SensorValue[liftpot] < 250)
+		{
+			motor[leftLift] = -5;
+			motor[rightLift] = 5;
+		}
+		else if(SensorValue[liftpot] > 300)
+		{
+			motor[leftLift] = 9;
+			motor[rightLift] = -12;
 		}
 		else
 		{
 			motor[leftLift] = 0;
 			motor[rightLift] = 0;
 		}
-
 		//Mani(Main Controller)
 		if (vexRT[Btn5U] == 1){
 			motor[Mani] = -127;
@@ -707,13 +719,13 @@ task usercontrol()
 		}
 		else
 		{
-			motor[Mani] = 0;
+			motor[Mani] = -11;
 		}
 
 
 		//intake
 
-		if (vexRT[Btn8D] == 1){
+		if (vexRT[Btn7L] == 1){
 			motor[Intake] = -127;
 		}
 		else if (vexRT[Btn8R] == 1){
@@ -722,10 +734,10 @@ task usercontrol()
 		else {
 			motor[Intake] = 25;
 		}
-/*
+		/*
 		//encoder prac
 		if(vexRT[Btn8U] == 1) {
-			encoderprac();
+		encoderprac();
 		}
 		/*
 		//automogoprac
@@ -734,6 +746,5 @@ task usercontrol()
 		}
 
 		*/
-
 	}
 }

@@ -370,6 +370,50 @@ void pre_auton()
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
+task liftfulldown
+{
+	while(SensorValue[liftpot] < 350)
+	{
+		motor[leftLift] = -125;
+		motor[rightLift] = 127;
+	}
+}
+task liftlow
+{
+	while(SensorValue[liftpot] < 700)
+	{
+		motor[leftLift] = 125;
+		motor[rightLift] = -127;
+	}
+}
+
+task maniup
+{
+	motor[Mani] = -127;
+	wait1Msec(800);
+	motor[Mani] = 0;
+}
+
+task manidown
+{
+	motor[Mani] = 127;
+	wait1Msec(1000);
+	motor[Mani] = 0;
+}
+
+task mogodeploy
+{
+	mogodown();
+	wait1Msec(1000);
+	mogostop();
+}
+
+task mogointake
+{
+	mogoup();
+	wait1Msec(1200);
+	mogostop();
+}
 
 void encoderprac()
 {
@@ -457,70 +501,102 @@ task autonomous()
 		//If count = 0, run left side mogo
 		displayLCDCenteredString(0, "LeftMogo Auton");
 		displayLCDCenteredString(1, "is running!");
-		motor[Intake] = 40;
+		motor[Intake] = 20;
 		moveForward(44, 127);
 		moveBackward(22, 127);
-		maniup();
-		mogodown();
-		wait1Msec(1300);
-		mogostop();
-		moveForward(1200, 127);
-		mogoup();
-		wait1Msec(1550);
-		mogostop();
+		startTask(liftlow);
+		startTask(maniup);
 		wait1Msec(200);
+		stopTask(liftlow);
+		stopTask(maniup);
+		startTask(mogodeploy);
+		moveForward(1200, 127);
+		startTask(mogointake);
+		wait1Msec(400);
+		stopTask(mogodeploy);
+		stopTask(mogointake);
 		motor[Intake] = -127;
 		wait1Msec(400);
 		stopMotor(Intake);
+		startTask(liftfulldown);
+		startTask(manidown);
+		motor[Intake] = 127; //intake second cone
+		wait1Msec(400);
+		stopMotor(Intake);
+		stopTask(manidown);
+		stopTask(liftfulldown);
+		startTask(maniup);
+		motor[Intake] = 127; //drop second cone
+		wait1Msec(400);
+		stopMotor(Intake);
+		stopTask(maniup);
 		moveBackward(1000, 127);
 		wait1Msec(200);
 		leftTurn(300, 127);
-		moveBackward(700, 127);
+		moveBackward(50, 127);
 		leftTurn(850, 127);
-		moveForward(600, 127);
-		mogodown();
-		wait1Msec(1000);
-		mogostop();
-		moveBackward(150, 127);
-		mogoup();
-		wait1Msec(1000);
-		mogostop();
-		moveBackward(660, 127);
+		moveForward(10, 127);
+		startTask(liftlow);
+		startTask(mogodeploy);
+		wait1Msec(100);
+		stopTask(mogodeploy);
+		stopTask(liftlow);
+		moveBackward(10, 127);
+		startTask(mogointake);
+		wait1Msec(200);
+		moveBackward(100, 127);
+		stopAllTasks();
 
 		break;
 	case 1:
 		//If count = 1, run right side mogo
 		displayLCDCenteredString(0, "RightMogo Auton");
 		displayLCDCenteredString(1, "is running!");
-		motor[Intake] = 40;
+		motor[Intake] = 20;
 		moveForward(44, 127);
 		moveBackward(22, 127);
-		maniup();
-		mogodown();
-		wait1Msec(1300);
-		mogostop();
-		moveForward(1200, 127);
-		mogoup();
-		wait1Msec(1550);
-		mogostop();
+		startTask(liftlow);
+		startTask(maniup);
 		wait1Msec(200);
+		stopTask(liftlow);
+		stopTask(maniup);
+		startTask(mogodeploy);
+		moveForward(1200, 127);
+		startTask(mogointake);
+		wait1Msec(400);
+		stopTask(mogodeploy);
+		stopTask(mogointake);
 		motor[Intake] = -127;
 		wait1Msec(400);
 		stopMotor(Intake);
+		startTask(liftfulldown);
+		startTask(manidown);
+		motor[Intake] = 127; //intake second cone
+		wait1Msec(400);
+		stopMotor(Intake);
+		stopTask(manidown);
+		stopTask(liftfulldown);
+		startTask(maniup);
+		motor[Intake] = 127; //drop second cone
+		wait1Msec(400);
+		stopMotor(Intake);
+		stopTask(maniup);
 		moveBackward(1000, 127);
 		wait1Msec(200);
 		rightTurn(300, 127);
-		moveBackward(700, 127);
+		moveBackward(50, 127);
 		rightTurn(850, 127);
-		moveForward(600, 127);
-		mogodown();
-		wait1Msec(1000);
-		mogostop();
-		moveBackward(300, 127);
-		mogoup();
-		wait1Msec(1000);
-		mogostop();
-		moveBackward(660, 127);
+		moveForward(10, 127);
+		startTask(liftlow);
+		startTask(mogodeploy);
+		wait1Msec(100);
+		stopTask(mogodeploy);
+		stopTask(liftlow);
+		moveBackward(10, 127);
+		startTask(mogointake);
+		wait1Msec(200);
+		moveBackward(100, 127);
+		stopAllTasks();
 
 
 		break;
@@ -528,7 +604,7 @@ task autonomous()
 		//If count = 2, run stationary goal
 		displayLCDCenteredString(0, "Station Auton");
 		displayLCDCenteredString(1, "is running!");
-
+		/*
 		setMotor(Intake, 127);
 		wait1Msec(500);
 		setMotor(Intake, 25);
@@ -556,7 +632,7 @@ task autonomous()
 		stopAllMotors();
 
 
-
+		*/
 
 
 	case 3:

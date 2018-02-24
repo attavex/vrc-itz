@@ -380,11 +380,13 @@ task liftfulldown
 }
 task liftlow
 {
-	while(SensorValue[liftpot] < 700)
+	while(SensorValue[liftpot] < 7)
 	{
 		motor[leftLift] = 125;
 		motor[rightLift] = -127;
 	}
+	motor[leftLift] = 0;
+	motor[rightLift] = 0;
 }
 
 task maniup
@@ -404,7 +406,7 @@ task manidown
 task mogodeploy
 {
 	mogodown();
-	wait1Msec(1000);
+	wait1Msec(2000);
 	mogostop();
 }
 
@@ -504,48 +506,45 @@ task autonomous()
 		motor[Intake] = 20;
 		moveForward(44, 127);
 		moveBackward(22, 127);
-		startTask(liftlow);
 		startTask(maniup);
-		wait1Msec(200);
-		stopTask(liftlow);
-		stopTask(maniup);
 		startTask(mogodeploy);
-		moveForward(1200, 127);
-		startTask(mogointake);
-		wait1Msec(400);
+		wait1Msec(1300);
+		stopTask(maniup);
 		stopTask(mogodeploy);
-		stopTask(mogointake);
+		moveForward(1200, 127);
+		mogoup();
+		wait1Msec(1550);
+		mogostop();
+		wait1Msec(200);
 		motor[Intake] = -127;
 		wait1Msec(400);
 		stopMotor(Intake);
-		startTask(liftfulldown);
 		startTask(manidown);
-		motor[Intake] = 127; //intake second cone
-		wait1Msec(400);
-		stopMotor(Intake);
+		wait1Msec(700);
 		stopTask(manidown);
-		stopTask(liftfulldown);
+		motor[Intake] = 127;
+		wait1Msec(300);
+		motor[Intake] = 20;
 		startTask(maniup);
-		motor[Intake] = 127; //drop second cone
-		wait1Msec(400);
-		stopMotor(Intake);
-		stopTask(maniup);
 		moveBackward(1000, 127);
 		wait1Msec(200);
-		leftTurn(300, 127);
-		moveBackward(50, 127);
-		leftTurn(850, 127);
-		moveForward(10, 127);
-		startTask(liftlow);
-		startTask(mogodeploy);
+		stopTask(maniup);
+		motor[Intake] = -127;
+		wait1Msec(400);
+		stopMotor(Intake);
 		wait1Msec(100);
-		stopTask(mogodeploy);
-		stopTask(liftlow);
-		moveBackward(10, 127);
-		startTask(mogointake);
-		wait1Msec(200);
-		moveBackward(100, 127);
-		stopAllTasks();
+		leftTurn(300, 127);
+		moveBackward(700, 127);
+		leftTurn(850, 127);
+		moveForward(600, 127);
+		mogodown();
+		wait1Msec(1000);
+		mogostop();
+		moveBackward(150, 127);
+		mogoup();
+		wait1Msec(1000);
+		mogostop();
+		moveBackward(660, 127);
 
 		break;
 	case 1:
@@ -555,48 +554,45 @@ task autonomous()
 		motor[Intake] = 20;
 		moveForward(44, 127);
 		moveBackward(22, 127);
-		startTask(liftlow);
 		startTask(maniup);
-		wait1Msec(200);
-		stopTask(liftlow);
-		stopTask(maniup);
 		startTask(mogodeploy);
+		wait1Msec(1300);
+		stopAllTasks();
 		moveForward(1200, 127);
-		startTask(mogointake);
-		wait1Msec(400);
-		stopTask(mogodeploy);
-		stopTask(mogointake);
+		mogoup();
+		wait1Msec(1550);
+		mogostop();
+		wait1Msec(200);
 		motor[Intake] = -127;
 		wait1Msec(400);
 		stopMotor(Intake);
-		startTask(liftfulldown);
 		startTask(manidown);
-		motor[Intake] = 127; //intake second cone
-		wait1Msec(400);
-		stopMotor(Intake);
-		stopTask(manidown);
-		stopTask(liftfulldown);
+		wait1Msec(700);
+		stopAllTasks();
+		motor[Intake] = 127;
+		wait1Msec(300);
+		motor[Intake] = 20;
 		startTask(maniup);
-		motor[Intake] = 127; //drop second cone
-		wait1Msec(400);
-		stopMotor(Intake);
-		stopTask(maniup);
 		moveBackward(1000, 127);
 		wait1Msec(200);
-		rightTurn(300, 127);
-		moveBackward(50, 127);
-		rightTurn(850, 127);
-		moveForward(10, 127);
-		startTask(liftlow);
-		startTask(mogodeploy);
-		wait1Msec(100);
-		stopTask(mogodeploy);
-		stopTask(liftlow);
-		moveBackward(10, 127);
-		startTask(mogointake);
-		wait1Msec(200);
-		moveBackward(100, 127);
 		stopAllTasks();
+		motor[Intake] = -127;
+		wait1Msec(400);
+		stopMotor(Intake);
+		wait1Msec(100);
+		rightTurn(300, 127);
+		moveBackward(700, 127);
+		rightTurn(850, 127);
+		moveForward(600, 127);
+		mogodown();
+		wait1Msec(1000);
+		mogostop();
+		moveBackward(150, 127);
+		mogoup();
+		wait1Msec(1000);
+		mogostop();
+		moveBackward(660, 127);
+
 
 
 		break;
@@ -714,12 +710,11 @@ task usercontrol()
 		displayLCDString(0, 0, "MainBat: ");
 		sprintf(mainBattery, "%1.2f%c", nImmediateBatteryLevel/1000.0,'V'); //Build the value to be displayed
 		displayNextLCDString(mainBattery);
-		displayLCDCenteredString(1, "2831 : Caliber 2.0");
+		displayLCDCenteredString(1, "2831 : Cloutiber");
 
 		//Drive
 		//tank(vexRT[Ch3] + vexRT[Ch3Xmtr2], vexRT[Ch2] + vexRT[Ch2Xmtr2]); //setting tank drive for both controllers...
 		//adding values creates equal drive for both main and 2nd controller.
-		//arcadeControl(Ch3, Ch4, 15);
 		arcade(vexRT[Ch4], vexRT[Ch3]);
 
 
@@ -761,13 +756,13 @@ task usercontrol()
 		*/
 
 		if (vexRT[Btn6U] == 1){
-			motor[leftLift] = 125;
+			motor[leftLift] = 127;
 			motor[rightLift] = -127;
 			SensorValue[liftpot] = 0;
 		}
 		else if (vexRT[Btn6D] == 1){
-			motor[leftLift] = -120;
-			motor[rightLift] = 75;
+			motor[leftLift] = -127;
+			motor[rightLift] = 127;
 			SensorValue[liftpot] = 0;
 		}
 
@@ -778,7 +773,7 @@ task usercontrol()
 		}
 		else if(SensorValue[liftpot] > 300)
 		{
-			motor[leftLift] = 9;
+			motor[leftLift] = 12;
 			motor[rightLift] = -12;
 		}
 		else
@@ -795,7 +790,7 @@ task usercontrol()
 		}
 		else
 		{
-			motor[Mani] = -11;
+			motor[Mani] = -7;
 		}
 
 

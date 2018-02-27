@@ -78,8 +78,8 @@ void turnleft(int time, int speed)
 
 void mogodown()
 {
-	setMotor(LMOGO, -127);
-	setMotor(RMOGO, 127);
+	setMotor(LMOGO, -100);
+	setMotor(RMOGO, 100);
 }
 
 void mogostop()
@@ -406,7 +406,7 @@ task manidown
 task mogodeploy
 {
 	mogodown();
-	wait1Msec(2000);
+	wait1Msec(1400);
 	mogostop();
 }
 
@@ -503,15 +503,16 @@ task autonomous()
 		//If count = 0, run left side mogo
 		displayLCDCenteredString(0, "LeftMogo Auton");
 		displayLCDCenteredString(1, "is running!");
-		motor[Intake] = 20;
+		motor[Intake] = 40;
+		motor[Mani] = -11;
 		moveForward(44, 127);
-		moveBackward(22, 127);
 		startTask(maniup);
 		startTask(mogodeploy);
 		wait1Msec(1300);
 		stopTask(maniup);
+		motor[Mani] = -11;
 		stopTask(mogodeploy);
-		moveForward(1200, 127);
+		moveForward(1450, 127);
 		mogoup();
 		wait1Msec(1550);
 		mogostop();
@@ -519,46 +520,43 @@ task autonomous()
 		motor[Intake] = -127;
 		wait1Msec(400);
 		stopMotor(Intake);
-		startTask(manidown);
-		wait1Msec(700);
-		stopTask(manidown);
-		motor[Intake] = 127;
-		wait1Msec(300);
-		motor[Intake] = 20;
-		startTask(maniup);
-		moveBackward(1000, 127);
+		moveBackward(950, 127);
 		wait1Msec(200);
 		stopTask(maniup);
+		motor[Mani] = -11;
 		motor[Intake] = -127;
 		wait1Msec(400);
 		stopMotor(Intake);
 		wait1Msec(100);
-		leftTurn(300, 127);
-		moveBackward(700, 127);
-		leftTurn(850, 127);
-		moveForward(600, 127);
+		leftTurn(157, 127);
+		moveBackward(300, 127);
+		leftTurn(370, 127);
+		moveForward(100, 127);
 		mogodown();
 		wait1Msec(1000);
 		mogostop();
-		moveBackward(150, 127);
+		moveBackward(300, 127);
 		mogoup();
 		wait1Msec(1000);
 		mogostop();
-		moveBackward(660, 127);
+		moveBackward(125, 127);
+		motor[Mani] = 0;
 
 		break;
 	case 1:
 		//If count = 1, run right side mogo
 		displayLCDCenteredString(0, "RightMogo Auton");
 		displayLCDCenteredString(1, "is running!");
-		motor[Intake] = 20;
+		motor[Intake] = 40;
+		motor[Mani] = -11;
 		moveForward(44, 127);
-		moveBackward(22, 127);
 		startTask(maniup);
 		startTask(mogodeploy);
 		wait1Msec(1300);
-		stopAllTasks();
-		moveForward(1200, 127);
+		stopTask(maniup);
+		motor[Mani] = -11;
+		stopTask(mogodeploy);
+		moveForward(1450, 127);
 		mogoup();
 		wait1Msec(1550);
 		mogostop();
@@ -566,32 +564,28 @@ task autonomous()
 		motor[Intake] = -127;
 		wait1Msec(400);
 		stopMotor(Intake);
-		startTask(manidown);
-		wait1Msec(700);
-		stopAllTasks();
-		motor[Intake] = 127;
-		wait1Msec(300);
-		motor[Intake] = 20;
-		startTask(maniup);
-		moveBackward(1000, 127);
+		moveBackward(950, 127);
 		wait1Msec(200);
-		stopAllTasks();
+		stopTask(maniup);
+		motor[Mani] = -11;
 		motor[Intake] = -127;
 		wait1Msec(400);
 		stopMotor(Intake);
 		wait1Msec(100);
-		rightTurn(300, 127);
-		moveBackward(700, 127);
-		rightTurn(850, 127);
-		moveForward(600, 127);
+		rightTurn(157, 127);
+		moveBackward(300, 127);
+		rightTurn(370, 127);
+		moveForward(100, 127);
 		mogodown();
 		wait1Msec(1000);
 		mogostop();
-		moveBackward(150, 127);
+		moveBackward(300, 127);
 		mogoup();
 		wait1Msec(1000);
 		mogostop();
-		moveBackward(660, 127);
+		moveBackward(125, 127);
+		motor[Mani] = 0;
+
 
 
 
@@ -600,44 +594,85 @@ task autonomous()
 		//If count = 2, run stationary goal
 		displayLCDCenteredString(0, "Station Auton");
 		displayLCDCenteredString(1, "is running!");
-		/*
-		setMotor(Intake, 127);
-		wait1Msec(500);
-		setMotor(Intake, 25);
-		drive(127, 400);
-		drive(-127, 300);
-		drive(127, 200);
-		maniup();
-		wait1Msec(1000);
-		liftup(500, 127);
-		wait1Msec(500);
-		drive(127, 700);
-		wait1Msec(500);
-		setMotor(Mani, 127);
-		wait1Msec(1500);
-		stopMotor(Mani);
-		wait1Msec(300);
-		liftdown(200, 127);
-		wait1Msec(300);
+		motor[Intake] = 40;
+		motor[Mani] = -11;
+		moveForward(44, 127);
+		startTask(maniup);
+		startTask(mogodeploy);
+		wait1Msec(1300);
+		stopTask(maniup);
+		motor[Mani] = -11;
+		stopTask(mogodeploy);
+		moveForward(1450, 127);
+		mogoup();
+		wait1Msec(1550);
+		mogostop();
+		wait1Msec(200);
 		motor[Intake] = -127;
 		wait1Msec(400);
 		stopMotor(Intake);
-		maniup();
-		drive(-127, 300);
-		liftdown(400, 127);
-		stopAllMotors();
-
-
-		*/
+		moveBackward(800, 127);
+		wait1Msec(200);
+		stopTask(maniup);
+		motor[Mani] = -11;
+		motor[Intake] = -127;
+		wait1Msec(400);
+		stopMotor(Intake);
+		wait1Msec(100);
+		leftTurn(500, 127);
+		mogodown();
+		wait1Msec(1000);
+		mogostop();
+		moveBackward(300, 127);
+		mogoup();
+		wait1Msec(1000);
+		mogostop();
+		moveBackward(125, 127);
+		motor[Mani] = 0;
 
 
 	case 3:
 		//If count = 3, run prog skills
 		displayLCDCenteredString(0, "Prog Skills");
+		displayLCDCenteredString(1, "is running!");						// Robot waits for 2000 milliseconds
+
+		displayLCDCenteredString(0, "Station Auton");
 		displayLCDCenteredString(1, "is running!");
-		wait1Msec(15000);						// Robot waits for 2000 milliseconds
-
-
+		motor[Intake] = 40;
+		motor[Mani] = -11;
+		moveForward(44, 127);
+		startTask(maniup);
+		startTask(mogodeploy);
+		wait1Msec(1300);
+		stopTask(maniup);
+		motor[Mani] = -11;
+		stopTask(mogodeploy);
+		moveForward(1450, 127);
+		mogoup();
+		wait1Msec(1550);
+		mogostop();
+		wait1Msec(200);
+		motor[Intake] = -127;
+		wait1Msec(400);
+		stopMotor(Intake);
+		moveBackward(800, 127);
+		wait1Msec(200);
+		stopTask(maniup);
+		motor[Mani] = -11;
+		motor[Intake] = -127;
+		wait1Msec(400);
+		stopMotor(Intake);
+		wait1Msec(100);
+		rightTurn(500, 127);
+		mogodown();
+		wait1Msec(1000);
+		mogostop();
+		moveBackward(300, 127);
+		mogoup();
+		wait1Msec(1000);
+		mogostop();
+		moveBackward(125, 127);
+		motor[Mani] = 0;
 		break;
 	default:
 		displayLCDCenteredString(0, "No valid choice");
@@ -790,7 +825,7 @@ task usercontrol()
 		}
 		else
 		{
-			motor[Mani] = -7;
+			motor[Mani] = -11;
 		}
 
 

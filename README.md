@@ -1,3 +1,3 @@
 # vrc-itz
-2831 Caliber ITZ RobotC Code -
-2831C MS VRC RobotC Program. Created by ndunna. 
+2831 Caliber ITZ PROS Code -
+2831C MS VRC PROS Program. Created by ndunna. 

@@ -29,8 +29,44 @@
  *
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
+inline void driveControl(int speed, int turn) //Arcade
+{
+    motorSet(DRIVE_L1, speed + turn);
+    motorSet(DRIVE_L2, speed + turn);
+    motorSet(DRIVE_R1, speed + turn);
+    motorSet(DRIVE_R2, speed + turn);
+}
+
+int liftOutput;
+inline void liftControl(bool bBtnUp, bool bBtnDown)
+{
+    if(bBtnUp)
+	{
+		liftOutput = 127;
+	}
+	else if (bBtnDown)
+	{
+		liftOutput = -127;
+	}
+	else if (analogRead(ARM_SENSOR) > 500)
+	{
+		liftOutput = 15;
+	}
+	else
+	{
+		liftOutput = -5;
+	}
+	lift(liftOutput);
+
+    
+
+}
+
 void operatorControl() {
-	while (1) {
-		delay(20);
+	while (true) {
+     delay(20);
+	driveControl(joystickGetAnalog(1, 2), joystickGetAnalog(1,4));
+	
+		
 	}
 }

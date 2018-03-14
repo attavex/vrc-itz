@@ -1,5 +1,7 @@
 {
     "files.associations": {
         "main.h": "c"
-    }
+    },
+    "files.autoSave": "afterDelay",
+    "C_Cpp.autoAddFileAssociations": true
 }

@@ -47,27 +47,6 @@
 #define bBtn5D joystickGetDigital(1, 5, JOY_DOWN)
 #define bBtn6U joystickGetDigital(1, 6, JOY_UP)
 #define bBtn6D joystickGetDigital(1, 6, JOY_DOWN)
-/*
-// Joy Values
-
-int joyAxis1 = joystickGetAnalog(1, 1);
-int joyAxis2 = joystickGetAnalog(1, 2);
-int joyAxis3 = joystickGetAnalog(1, 3);
-int joyAxis4 = joystickGetAnalog(1, 4);
-// Btn Values
-bool bBtn7L = joystickGetDigital(1, 7, JOY_LEFT);
-bool bBtn7R = joystickGetDigital(1, 7, JOY_RIGHT);
-bool bBtn7U = joystickGetDigital(1, 7, JOY_UP);
-bool bBtn7D = joystickGetDigital(1, 7, JOY_DOWN);
-bool bBtn8L = joystickGetDigital(1, 8, JOY_LEFT);
-bool bBtn8R = joystickGetDigital(1, 8, JOY_RIGHT);
-bool bBtn8U = joystickGetDigital(1, 8, JOY_UP);
-bool bBtn8D = joystickGetDigital(1, 8, JOY_DOWN);
-bool bBtn5U = joystickGetDigital(1, 5, JOY_UP);
-bool bBtn5D = joystickGetDigital(1, 5, JOY_DOWN);
-bool bBtn6U = joystickGetDigital(1, 6, JOY_UP);
-bool bBtn6D = joystickGetDigital(1, 6, JOY_DOWN);
-*/
 
 inline void driveControl(int speed, int turn) //Arcade
 {
@@ -81,7 +60,7 @@ inline void liftControl(bool bBtnUp, bool bBtnDown)
     if(bBtnUp)
 	{
 		liftOutput = 127;
-	}
+	}       
 	else if (bBtnDown)
 	{
 		liftOutput = -127;

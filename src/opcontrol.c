@@ -53,7 +53,7 @@ inline void driveControl(int speed, int turn) //Arcade
     motorSet(DRIVE_L, speed + turn);
     motorSet(DRIVE_R, -speed + turn);
 }
-/*
+/*test
 int liftOutput;
 inline void liftControl(bool bBtnUp, bool bBtnDown)
 {

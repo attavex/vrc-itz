@@ -1,7 +1,7 @@
 #include "API.h"
 
 
-//Motors
+/* -------------------------------Motor Numbers--------------------------------- */
 #define DRIVE_L 2
 #define DRIVE_R 3
 #define MOGO    4
@@ -14,7 +14,7 @@
 
 
 
-//Analog Sensors
+/* ------------------------------Analog Sensors--------------------------------- */
 #define MOGO_POT 1
 
 

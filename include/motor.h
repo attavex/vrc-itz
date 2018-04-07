@@ -2,20 +2,27 @@
 
 
 /* -------------------------------Motor Numbers--------------------------------- */
-#define DRIVE_L 2
-#define DRIVE_R 3
-#define MOGO    4
-#define LIFT_L   5
-#define LIFT_R   6
-#define MANI_L   7
-#define MANI_R   8
-#define INTAKE  9
-
+#define DRIVE_RB 1
+#define DRIVE_RF 2
+#define R_LIFT   3
+#define R_MANI 4
+#define MOGO  5
+#define INTAKE   6
+#define L_MANI   7
+#define L_LIFT 8
+#define DRIVE_LF 9
+#define DRIVE_LB 10
 
 
 
 /* ------------------------------Analog Sensors--------------------------------- */
 #define MOGO_POT 1
+#define LIFT_POT 2
+
+
 
 
 void lift(int iSpeed);
+void mogo(int iSpeed);
+void roller(int iSpeed);
+void mani(int iSpeed);

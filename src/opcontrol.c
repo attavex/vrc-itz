@@ -1,34 +1,5 @@
-/** @file opcontrol.c
- * @brief File for operator control code
- *
- * This file should contain the user operatorControl() function and any functions related to it.
- *
- * Any copyright is dedicated to the Public Domain.
- * http://creativecommons.org/publicdomain/zero/1.0/
- *
- * PROS contains FreeRTOS (http://www.freertos.org) whose source code may be
- * obtained from http://sourceforge.net/projects/freertos/files/ or on request.
- */
-
 #include "main.h"
 
-/*
- * Runs the user operator control code. This function will be started in its own task with the
- * default priority and stack size whenever the robot is enabled via the Field Management System
- * or the VEX Competition Switch in the operator control mode. If the robot is disabled or
- * communications is lost, the operator control task will be stopped by the kernel. Re-enabling
- * the robot will restart the task, not resume it from where it left off.
- *
- * If no VEX Competition Switch or Field Management system is plugged in, the VEX Cortex will
- * run the operator control task. Be warned that this will also occur if the VEX Cortex is
- * tethered directly to a computer via the USB A to A cable without any VEX Joystick attached.
- *
- * Code running in this task can take almost any action, as the VEX Joystick is available and
- * the scheduler is operational. However, proper use of delay() or taskDelayUntil() is highly
- * recommended to give other tasks (including system tasks such as updating LCDs) time to run.
- *
- * This task should never exit; it should end with some kind of infinite loop, even if empty.
- */
 // Joy Values
 #define joyAxis1 joystickGetAnalog(1, 1)
 #define joyAxis2 joystickGetAnalog(1, 2)
@@ -59,13 +30,11 @@ inline void driveControl(int speed, int turn) //Arcade
 int mogoOutput;
 inline void mogoControl(bool bBtnUp, bool bBtnDown)
 {
-    if(bBtnUp)
+    if(bBtnUp) mogoOutput = 127;       
+	else if (bBtnDown) mogoOutput = -127;
+	else if (analogRead(MOGO_POT > 1400))
 	{
-		mogoOutput = 127;
-	}       
-	else if (bBtnDown)
-	{
-		mogoOutput = -127;
+		mogoOutput = -40;
 	}
 	else
 	{
@@ -103,16 +72,22 @@ inline void maniControl(bool bBtnUp, bool bBtnDown)
 {
     if(bBtnUp)
 	{
-		maniOutput = 120;
-	}       
+		//maniOutput = (3850 - analogRead(MANI_POT))/6;                         
+        maniOutput = 127;
+    }
 	else if (bBtnDown)
 	{
-		maniOutput = -110;
+		maniOutput = -127;
 	}
+	//else if (analogRead(MANI_POT < 3000)) 
+	//{
+     //   maniOutput = -15;
+	//}
 	else
 	{
-        maniOutput = 8;
+        maniOutput = -4;
 	}
+
 	
 	mani(maniOutput);
 }
@@ -132,9 +107,13 @@ inline void rollerControl(bool bBtnUp, bool bBtnDown, bool bBtnStop)
 	{
 		rollerOutput = 0;
 	}
+	else if(analogRead(MANI_POT) < 3200 && analogRead(LIFT_POT) > 3400) {
+		rollerOutput = 127;
+	}
 	else
-	{
-        rollerOutput = 25;
+	{	
+
+        rollerOutput = 15;
 	}
 	roller(rollerOutput);
 }
@@ -148,7 +127,6 @@ void operatorControl() {
 	liftControl(bBtn6U, bBtn6D);
 	maniControl(bBtn5U, bBtn5D);
 	rollerControl(bBtn8R, bBtn7L, bBtn8D);
-	printf("%d\n", analogRead(LIFT_POT));
-		
+    printf("%d/n", analogRead(MANI_POT));
 	}
 }

@@ -72,14 +72,14 @@ inline void maniControl(bool bBtnUp, bool bBtnDown)
 {
     if(bBtnUp)
 	{
-		//maniOutput = (3850 - analogRead(MANI_POT))/6;                         
-        maniOutput = 127;
+		//maniOutput = (3700 - analogRead(MANI_POT))/4;                         
+        maniOutput = 80;
     }
 	else if (bBtnDown)
 	{
-		maniOutput = -127;
+		maniOutput = -80;
 	}
-	//else if (analogRead(MANI_POT < 3000)) 
+	//else if (analogRead(MANI_POT < 3200)) 
 	//{
      //   maniOutput = -15;
 	//}

@@ -30,17 +30,23 @@ inline void driveControl(int speed, int turn) //Arcade
 int mogoOutput;
 inline void mogoControl(bool bBtnUp, bool bBtnDown)
 {
-    if(bBtnUp) mogoOutput = 127;       
-	else if (bBtnDown) mogoOutput = -127;
-	else if (analogRead(MOGO_POT > 1400))
+	
+    if(bBtnUp)      
 	{
-		mogoOutput = -40;
+		mogoOutput = 127;  
+	}
+	else if (bBtnDown) 
+	{
+		mogoOutput = -127;
+	}
+	else if (analogRead(MOGO_POT) > 1200)
+	{
+		mogoOutput = 40;
 	}
 	else
 	{
         mogoOutput = 0;
 	}
-	
 	mogo(mogoOutput);
 }
 
@@ -117,16 +123,43 @@ inline void rollerControl(bool bBtnUp, bool bBtnDown, bool bBtnStop)
 	}
 	roller(rollerOutput);
 }
+bool baseLockOutput = 0;
+inline void baseLock(bool enableLock, bool disableLock, int speed, int turn)
+{
+	if(enableLock)
+	{
+		baseLockOutput = 1;
+	}
+	else if(disableLock)
+	{
+		baseLockOutput = 0;
+	}
 
+	if(baseLockOutput == 1)
+	{
+	    motorSet(DRIVE_LB, -20);
+	    motorSet(DRIVE_LF, -20);
+        motorSet(DRIVE_RB, 20);
+	    motorSet(DRIVE_RF, -20);
+	}
+	else if(baseLockOutput == 0)
+	{
+        motorSet(DRIVE_LB, -speed - turn);
+	    motorSet(DRIVE_LF, speed + turn);
+        motorSet(DRIVE_RB, -speed + turn);
+	    motorSet(DRIVE_RF, -speed + turn);
+	}
+}
 
 void operatorControl() {
 	while (true) {
      delay(20);
-	driveControl(joyAxis3, joyAxis4);
+	//driveControl(joyAxis3, joyAxis4);
 	mogoControl(bBtn8L, bBtn8U);
 	liftControl(bBtn6U, bBtn6D);
 	maniControl(bBtn5U, bBtn5D);
 	rollerControl(bBtn8R, bBtn7L, bBtn8D);
-    printf("%d/n", analogRead(MANI_POT));
+	baseLock(bBtn7R, bBtn7D, joyAxis3, joyAxis4); // ~~~TEST LATER~~~
+    printf("%d\n", analogRead(MOGO_POT));
 	}
 }

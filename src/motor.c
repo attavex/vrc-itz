@@ -22,12 +22,13 @@ void mani(int iSpeed)
     motorSet(R_MANI, -iSpeed);
 }
 
-//PID//
+//PD//
+
 pid sArmPID;
 int
 iArmPID( int iDes ) {
-	sArmPID.kP         = 1;
-  sArmPID.kD         = 0;
+	sArmPID.kP         = 0.021;
+  sArmPID.kD         = 0.38;
 	sArmPID.current    = analogRead(LIFT_POT);
 	sArmPID.error      = iDes - sArmPID.current;
 	sArmPID.derivative = sArmPID.error - sArmPID.lastError;

@@ -50,27 +50,20 @@ inline void mogoControl(bool bBtnUp, bool bBtnDown)
 	mogo(mogoOutput);
 }
 
-int liftOutput;
+int liftOutput, iArmDes;
 inline void liftControl(bool bBtnUp, bool bBtnDown)
 {
-    if(bBtnUp)
-	{
-		liftOutput = 127;
-	}       
-	else if (bBtnDown)
-	{
-		liftOutput = -127;
-	}
-	else if (analogRead(LIFT_POT) > 3500)
-	{
-		liftOutput = -10;
-	}
-	else
-	{
-		liftOutput = 10;
-	}
+    if(bBtnUp || bBtnDown)
+    {
+        liftOutput = bBtnUp ? 127 : (bBtnDown ? -127 : 0);
+        iArmDes = analogRead(LIFT_POT);
+    }       
+    else
+    {
+        liftOutput = iArmPID(iArmDes);
+    }
 
-	lift(liftOutput);
+    lift(liftOutput);
 }
 
 int maniOutput;

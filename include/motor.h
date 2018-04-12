@@ -22,6 +22,22 @@
 
 
 
+// PID //
+typedef struct {
+    float current;
+    float kP;
+    float kI;
+    float kD;
+    float target;
+    float integral;
+    float error;
+    float derivative;
+    float lastError;
+} pid;
+
+int iArmPID(int iDes);
+
+
 
 void lift(int iSpeed);
 void mogo(int iSpeed);

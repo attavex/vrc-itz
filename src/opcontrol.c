@@ -150,13 +150,13 @@ void operatorControl() {
      delay(20);
 	 lcdClear(uart1);
 	 lcdPrint(uart1, 1, "Batt: %1.3f V", (double)powerLevelMain() / 1000);
-	 lcdPrint(uart1, 2, "Batt: %1.3f V", (double)powerLevelBackup() / 1000);
+	 lcdPrint(uart1, 2, "Batt: %1.3f V", (double)digitalRead(5) / 1000);
 	//driveControl(joyAxis3, joyAxis4);
 	mogoControl(bBtn8L, bBtn8U);
 	liftControl(bBtn6U, bBtn6D);
 	maniControl(bBtn5U, bBtn5D);
 	rollerControl(bBtn8R, bBtn7L, bBtn8D);
-	baseLock(bBtn7R, bBtn7D, joyAxis3, joyAxis4); // ~~~TEST LATER~~~
+	baseLock(bBtn7R, bBtn7D, joyAxis3, joyAxis4); 
     printf("%d\n", analogRead(LIFT_POT));
 	}
 }

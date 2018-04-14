@@ -51,7 +51,7 @@ inline void mogoControl(bool bBtnUp, bool bBtnDown)
 }
 
 int liftOutput, iArmDes;
-iArmDes = 200;
+//iArmDes = 200;
 inline void liftControl(bool bBtnUp, bool bBtnDown)
 {
     if(bBtnUp || bBtnDown)
@@ -148,6 +148,9 @@ inline void baseLock(bool enableLock, bool disableLock, int speed, int turn)
 void operatorControl() {
 	while (true) {
      delay(20);
+	 lcdClear(uart1);
+	 lcdPrint(uart1, 1, "Batt: %1.3f V", (double)powerLevelMain() / 1000);
+	 lcdPrint(uart1, 2, "Batt: %1.3f V", (double)powerLevelBackup() / 1000);
 	//driveControl(joyAxis3, joyAxis4);
 	mogoControl(bBtn8L, bBtn8U);
 	liftControl(bBtn6U, bBtn6D);

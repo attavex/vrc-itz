@@ -150,7 +150,7 @@ void operatorControl() {
      delay(20);
 	 lcdClear(uart1);
 	 lcdPrint(uart1, 1, "Batt: %1.3f V", (double)powerLevelMain() / 1000);
-	 lcdPrint(uart1, 2, "Batt: %1.3f V", (double)digitalRead(5) / 1000);
+	 lcdPrint(uart1, 2, "Batt: %1.3f V", (double)analogRead(POWER_EXP) * 0.0456);
 	//driveControl(joyAxis3, joyAxis4);
 	mogoControl(bBtn8L, bBtn8U);
 	liftControl(bBtn6U, bBtn6D);

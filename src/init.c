@@ -38,6 +38,6 @@ void initializeIO() {
  */
 void initialize() {
   lcdInit(uart1);
-  
+  lcdSetBacklight(uart1, 1);
 }
 

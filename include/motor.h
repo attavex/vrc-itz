@@ -20,6 +20,12 @@
 #define LIFT_POT 2
 #define MANI_POT 3
 
+// Bat Voltage (Power Exp)
+#define POWER_EXP 4
+
+
+/*-----------------------------Digital Sensors---------------------------------- */
+
 
 
 // PID //

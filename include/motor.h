@@ -19,13 +19,22 @@
 #define MOGO_POT 1
 #define LIFT_POT 2
 #define MANI_POT 3
+#define GYRO_PORT 4
+
+Gyro GYRO;
 
 // Bat Voltage (Power Exp)
 #define POWER_EXP 4
 
 
 /*-----------------------------Digital Sensors---------------------------------- */
+#define RIGHT_QUAD_TOP_PORT 1
+#define RIGHT_QUAD_BOTTOM_PORT 2
+#define LEFT_QUAD_TOP_PORT 3
+#define LEFT_QUAD_BOTTOM_PORT 4
 
+Encoder RIGHT_ENCODER;
+Encoder LEFT_ENCODER;
 
 
 // PID //
@@ -49,3 +58,5 @@ void lift(int iSpeed);
 void mogo(int iSpeed);
 void roller(int iSpeed);
 void mani(int iSpeed);
+void lcdAuton_Pages(int selectVal);
+void lcdAuton();

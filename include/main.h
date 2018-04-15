@@ -20,6 +20,8 @@
  * obtained from http://sourceforge.net/projects/freertos/files/ or on request.
  */
 
+
+
 #ifndef MAIN_H_
 
 // This prevents multiple inclusion, which isn't bad for this file but is good practice
@@ -52,6 +54,7 @@ extern "C" {
  * The autonomous task may exit, unlike operatorControl() which should never exit. If it does
  * so, the robot will await a switch to another mode or disable/enable cycle.
  */
+int selectAuton[3];
 void autonomous();
 /**
  * Runs pre-initialization code. This function will be started in kernel mode one time while the

@@ -43,6 +43,10 @@ inline void mogoControl(bool bBtnUp, bool bBtnDown)
 	{
 		mogoOutput = 40;
 	}
+	else if (analogRead(MOGO_POT) < 75)
+	{
+		mogoOutput = -15;
+	}
 	else
 	{
         mogoOutput = 0;
@@ -157,6 +161,6 @@ void operatorControl() {
 	maniControl(bBtn5U, bBtn5D);
 	rollerControl(bBtn8R, bBtn7L, bBtn8D);
 	baseLock(bBtn7R, bBtn7D, joyAxis3, joyAxis4); 
-    printf("%d\n", analogRead(LIFT_POT));
+    printf("%d\n", analogRead(MOGO_POT));
 	}
 }

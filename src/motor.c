@@ -27,8 +27,8 @@ void mani(int iSpeed)
 pid sArmPID;
 int
 iArmPID( int iDes ) {
-	sArmPID.kP         = 0.021;
-  sArmPID.kD         = 0.38;
+	sArmPID.kP         = 0.075;
+  sArmPID.kD         = 0.1;
 	sArmPID.current    = analogRead(LIFT_POT);
 	sArmPID.error      = iDes - sArmPID.current;
 	sArmPID.derivative = sArmPID.error - sArmPID.lastError;

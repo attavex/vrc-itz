@@ -77,16 +77,20 @@ inline void maniControl(bool bBtnUp, bool bBtnDown)
     if(bBtnUp)
 	{
 		//maniOutput = (3700 - analogRead(MANI_POT))/4;                         
-        maniOutput = 80;
+        maniOutput = 90;
     }
 	else if (bBtnDown)
 	{
-		maniOutput = -80;
+		maniOutput = -90;
 	}
-	//else if (analogRead(MANI_POT < 3200)) 
-	//{
-     //   maniOutput = -15;
-	//}
+	else if(analogRead(MANI_POT) > 3675)
+	{
+		maniOutput = 15;
+	}
+	else if (analogRead(MANI_POT < 3200)) 
+	{
+        maniOutput = -15;
+	}
 	else
 	{
         maniOutput = -4;
@@ -135,10 +139,14 @@ inline void baseLock(bool enableLock, bool disableLock, int speed, int turn)
 
 	if(baseLockOutput == 1)
 	{
-	    motorSet(DRIVE_LB, -20);
-	    motorSet(DRIVE_LF, -20);
-        motorSet(DRIVE_RB, 20);
-	    motorSet(DRIVE_RF, -20);
+	    motorSet(DRIVE_LB, -30);
+	    motorSet(DRIVE_LF, -10);
+        motorSet(DRIVE_RB, 30);
+	    motorSet(DRIVE_RF, -10);
+	}
+	else if(baseLockOutput == 1 && (joystickGetAnalog(1, joyAxis3) == 1 || joystickGetAnalog(1, joyAxis4) == 1))
+	{
+		baseLockOutput = 0;
 	}
 	else if(baseLockOutput == 0)
 	{
@@ -161,6 +169,6 @@ void operatorControl() {
 	maniControl(bBtn5U, bBtn5D);
 	rollerControl(bBtn8R, bBtn7L, bBtn8D);
 	baseLock(bBtn7R, bBtn7D, joyAxis3, joyAxis4); 
-    printf("%d\n", analogRead(MOGO_POT));
+    printf("%d\n", analogRead(MANI_POT));
 	}
 }

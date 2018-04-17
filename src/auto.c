@@ -1,9 +1,45 @@
 #include "main.h"
 
+inline void driveForward(int ticks, int speed)
+{
+  while(encoderGet(LEFT_ENCODER) < ticks)
+      {
+        motorSet(DRIVE_LB, -speed);
+	      motorSet(DRIVE_LF, -speed);
+        motorSet(DRIVE_RB, speed);
+	      motorSet(DRIVE_RF, -speed);
+      }
+
+}
+inline void mogoDown()
+{
+  while(analogRead(MOGO_POT) < 1200)
+  {
+    mogo(127);
+  }
+  while(analogRead(MOGO_POT) > 1110)
+  {
+    mogo(30);
+  }
+  mogo(0);
+}
+
+inline void maniLiftDown()
+{
+
+}
+
+
+
 void mogoAutonMaster20(int choice)
 {
     if(choice == 1)
     {
+      encoderReset(LEFT_ENCODER);
+      mogoDown();
+      driveForward(800, 127);
+     
+      
         //insert red-side, 20 point, 2 cone auton
     }
     else if(choice == 2)

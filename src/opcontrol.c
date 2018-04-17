@@ -125,6 +125,7 @@ inline void rollerControl(bool bBtnUp, bool bBtnDown, bool bBtnStop)
 	}
 	roller(rollerOutput);
 }
+
 bool baseLockOutput = 0;
 inline void baseLock(bool enableLock, bool disableLock, int speed, int turn)
 {
@@ -158,11 +159,14 @@ inline void baseLock(bool enableLock, bool disableLock, int speed, int turn)
 }
 
 void operatorControl() {
-	while (true) {
+	while (true) 
+	{
      delay(20);
-	 lcdClear(uart1);
-	 lcdPrint(uart1, 1, "Batt: %1.3f V", (double)powerLevelMain() / 1000);
-	 lcdPrint(uart1, 2, "Batt: %1.3f V", (double)analogRead(POWER_EXP) * 0.0456);
+	 lcdClear(uart1); 
+	 /*lcdPrint(uart1, 1, "Batt: %1.3f V", (double)powerLevelMain() / 1000);
+	 lcdPrint(uart1, 2, "Batt: %1.3f V", (double)analogRead(POWER_EXP) * 0.0456);*/
+	lcdPrint(uart1, 1, "MANI - %d", analogRead(MANI_POT));
+	lcdPrint(uart1, 2, "LIFT - %d", analogRead(LIFT_POT));
 	//driveControl(joyAxis3, joyAxis4);
 	mogoControl(bBtn8L, bBtn8U);
 	liftControl(bBtn6U, bBtn6D);
@@ -170,5 +174,7 @@ void operatorControl() {
 	rollerControl(bBtn8R, bBtn7L, bBtn8D);
 	baseLock(bBtn7R, bBtn7D, joyAxis3, joyAxis4); 
     printf("%d\n", analogRead(MANI_POT));
+	
 	}
+	
 }

@@ -19,7 +19,7 @@
 #define MOGO_POT 1
 #define LIFT_POT 2
 #define MANI_POT 3
-#define GYRO_PORT 4
+#define GYRO_PORT 5
 
 Gyro GYRO;
 

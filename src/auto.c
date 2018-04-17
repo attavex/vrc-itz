@@ -1,33 +1,47 @@
 #include "main.h"
 
-inline void driveForward(int ticks, int speed)
-{
-  while(encoderGet(LEFT_ENCODER) < ticks)
-      {
-        motorSet(DRIVE_LB, -speed);
-	      motorSet(DRIVE_LF, -speed);
-        motorSet(DRIVE_RB, speed);
-	      motorSet(DRIVE_RF, -speed);
-      }
+TaskHandle driveTask, turnTask;
 
-}
-inline void mogoDown()
+int driveGet() 
 {
-  while(analogRead(MOGO_POT) < 1200)
+    return(encoderGet((LEFT_ENCODER) + encoderGet(RIGHT_ENCODER)) / 2);
+}
+
+
+
+
+void testPIDRotate(int gDes)
+{
+  turnTask = taskCreate(pidRotate, TASK_DEFAULT_STACK_SIZE, (void*)gDes, TASK_PRIORITY_DEFAULT);
+//anything here will run
+  while(gyroGet(GYRO) < gDes)
   {
-    mogo(127);
+    delay(15);
   }
-  while(analogRead(MOGO_POT) > 1110)
-  {
-    mogo(30);
-  }
-  mogo(0);
+  delay(500);
+  taskDelete(turnTask);
 }
 
-inline void maniLiftDown()
+void testPIDDrive(int dDes)
 {
 
+  turnTask = taskCreate(pidDrive, TASK_DEFAULT_STACK_SIZE, (void*)dDes, TASK_PRIORITY_DEFAULT);
+ //anything here will run
+  while(driveGet < dDes)
+  {
+    delay(15);
+  }
+  delay(500);
+  taskDelete(turnTask);
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -35,11 +49,6 @@ void mogoAutonMaster20(int choice)
 {
     if(choice == 1)
     {
-      encoderReset(LEFT_ENCODER);
-      mogoDown();
-      driveForward(800, 127);
-     
-      
         //insert red-side, 20 point, 2 cone auton
     }
     else if(choice == 2)

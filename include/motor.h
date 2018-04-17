@@ -1,7 +1,7 @@
 #include "API.h"
 
 
-/* -------------------------------Motor Numbers--------------------------------- */
+/* ------------------------------Motor Numbers--------------------------------- */
 #define DRIVE_RB 1
 #define DRIVE_RF 2
 #define R_LIFT   3
@@ -50,13 +50,18 @@ typedef struct {
     float lastError;
 } pid;
 
+//Lift
 int iArmPID(int iDes);
+//Drive
+int iDrivePID(int iDes);
 
-
-
+// ~~~DEFINE ALL FUNCTIONS~~~ //
+void driveSpeed(int iSpeed);
 void lift(int iSpeed);
 void mogo(int iSpeed);
 void roller(int iSpeed);
 void mani(int iSpeed);
+void pidDrive(void * parameter);
+void pidRotate(void * parameter);
 void lcdAuton_Pages(int selectVal);
 void lcdAuton();

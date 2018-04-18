@@ -3,20 +3,20 @@
 void driveSpeed(int iSpeed)
 {
     motorSet(DRIVE_LB, -iSpeed);
-	motorSet(DRIVE_LF, -iSpeed);
-    motorSet(DRIVE_RB, iSpeed);
+	motorSet(DRIVE_LF, iSpeed);
+    motorSet(DRIVE_RB, -iSpeed);
 	motorSet(DRIVE_RF, -iSpeed);
 }
 
 void driveLeft(int iSpeed)
 {
     motorSet(DRIVE_LB, -iSpeed);
-	motorSet(DRIVE_LF, -iSpeed);
+	motorSet(DRIVE_LF, iSpeed);
 }
 
 void driveRight(int iSpeed)
 {
-    motorSet(DRIVE_RB, iSpeed);
+    motorSet(DRIVE_RB, -iSpeed);
 	motorSet(DRIVE_RF, -iSpeed);
 }
 
@@ -73,8 +73,8 @@ pid sDrivePID;
     pid sRotatePID;
     int iRotatePID( int target) 
     {
-    sRotatePID.kP = 5;
-    sRotatePID.kD = 7;
+    sRotatePID.kP = 9;
+    sRotatePID.kD = 4;
     sRotatePID.kI = 0; 
     sRotatePID.current = gyroGet(GYRO);
     sRotatePID.error = target - sRotatePID.current;

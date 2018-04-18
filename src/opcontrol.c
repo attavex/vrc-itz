@@ -54,7 +54,8 @@ inline void mogoControl(bool bBtnUp, bool bBtnDown)
 	mogo(mogoOutput);
 }
 
-int liftOutput, iArmDes;
+int liftOutput;	
+int iArmDes = 2900;
 //iArmDes = 200;
 inline void liftControl(bool bBtnUp, bool bBtnDown)
 {
@@ -62,7 +63,11 @@ inline void liftControl(bool bBtnUp, bool bBtnDown)
     {
         liftOutput = bBtnUp ? 127 : (bBtnDown ? -127 : 0);
         iArmDes = analogRead(LIFT_POT);
-    }       
+    }
+	else if(analogRead(LIFT_POT) < 3500) 
+	{
+		liftOutput = -15;
+	}       
     else
     {
         liftOutput = -iArmPID(iArmDes);
@@ -173,7 +178,7 @@ void operatorControl() {
 	maniControl(bBtn5U, bBtn5D);
 	rollerControl(bBtn8R, bBtn7L, bBtn8D);
 	baseLock(bBtn7R, bBtn7D, joyAxis3, joyAxis4); 
-    printf("%d\n", analogRead(MANI_POT));
+	if(bBtn7U) autonomous();
 	
 	}
 	

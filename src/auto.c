@@ -4,17 +4,17 @@ TaskHandle driveTask, turnTask;
 
 int driveGet() 
 {
-    return(encoderGet((LEFT_ENCODER) + encoderGet(RIGHT_ENCODER)) / 2);
+    return((encoderGet(LEFT_ENCODER) + encoderGet(RIGHT_ENCODER)) / 2);
 }
 
 
 
 
-void testPIDRotate(int gDes)
+void testPIDRotate(int gyDes)
 {
-  turnTask = taskCreate(pidRotate, TASK_DEFAULT_STACK_SIZE, (void*)gDes, TASK_PRIORITY_DEFAULT);
+  turnTask = taskCreate(pidRotate, TASK_DEFAULT_STACK_SIZE, (void*)gyDes, TASK_PRIORITY_DEFAULT);
 //anything here will run
-  while(gyroGet(GYRO) < gDes)
+  while(gyroGet(GYRO) < gyDes)
   {
     delay(15);
   }
@@ -24,25 +24,47 @@ void testPIDRotate(int gDes)
 
 void testPIDDrive(int dDes)
 {
-
-  turnTask = taskCreate(pidDrive, TASK_DEFAULT_STACK_SIZE, (void*)dDes, TASK_PRIORITY_DEFAULT);
+  driveTask = taskCreate(pidDrive, TASK_DEFAULT_STACK_SIZE, (void*)dDes, TASK_PRIORITY_DEFAULT);
  //anything here will run
-  while(driveGet < dDes)
+  while(driveGet() < dDes)
   {
     delay(15);
   }
   delay(500);
-  taskDelete(turnTask);
+  taskDelete(driveTask);
 }
 
-
-
-
-
-
-
-
-
+int dDes;
+void aStationaryAuton(char cGtfo[], int iCone) {
+  lift(127);
+  mogo(127);
+  mani(-127);
+  driveSpeed(127);
+  while(analogRead(LIFT_POT) > 2845 || analogRead(MANI_POT) > 2600 || driveGet() < 200 || analogRead(MOGO_POT) < 1400) 
+  {  
+    if(analogRead(LIFT_POT) < 2845) lift(10);
+    if(analogRead(MANI_POT) < 2600) mani(-10);
+    if(analogRead(MOGO_POT) > 1400) mogo(30);
+    if(driveGet() > 200) driveSpeed(0);
+    delay(20);
+  }
+  lift(10); mogo(30); driveSpeed(0); mani(-10);
+  driveSpeed(127);
+  wait(250); driveSpeed(0); wait(500);
+  lift(-127);
+  wait(250);
+  roller(-127);
+  wait(50);
+  lift(127);
+  wait(250);
+  lift(10);
+  roller(0);
+  dDes = -200;
+  encoderReset(LEFT_ENCODER);
+  encoderReset(RIGHT_ENCODER);
+  driveTask = taskCreate(pidDrive, TASK_DEFAULT_STACK_SIZE, (void*)dDes, TASK_PRIORITY_DEFAULT);
+  
+}
 
 
 void mogoAutonMaster20(int choice)
@@ -106,83 +128,8 @@ void progSkills()
 
 void autonomous() 
 {
-
-  //20pt mogo
-  if (selectAuton[0] == 1)
-  {
-    //two cones
-    if (selectAuton[1] == 1)
-    {
-      //red side
-      if (selectAuton[2] == 1)
-      {
-        mogoAutonMaster20(1);
-      }
-      //blue side
-      if (selectAuton[2] == 2)
-      {
-        mogoAutonMaster20(2);
-      }
-    }
-    //three cones
-    if (selectAuton[1] == 2)
-    {
-      //red side
-      if (selectAuton[2] == 1)
-      {
-        mogoAutonMaster20(3);
-      }
-      //blue side
-      if (selectAuton[2] == 2)
-      {
-        mogoAutonMaster20(4);
-      }
-    }
-  }
-
-
-  //5pt mogo
-  if (selectAuton[0] == 2)
-  {
-    //two cone
-    if (selectAuton[1] == 1)
-    {
-      //red side
-      if (selectAuton[2] == 1)
-      {
-        mogoAutonMaster5(1);
-
-      }
-      //blue side
-      if (selectAuton[2] == 2)
-      {
-        mogoAutonMaster5(2);
-      }
-    }
-    //three cones
-    if (selectAuton[1] == 2)
-    {
-      //red side
-      if (selectAuton[2] == 1)
-      {
-        mogoAutonMaster5(3);
-      }
-      //blue side
-      if (selectAuton[2] == 2)
-      {
-        mogoAutonMaster5(4);
-      }
-    }
-  }
-
-  //stationary
-  if (selectAuton[0] == 3)
-  {
-      stationaryAuton();
-  }
-  //programming skills
-  if (selectAuton[0] == 4)
-  {
-   progSkills();
-  }
+  encoderReset(LEFT_ENCODER);
+  encoderReset(RIGHT_ENCODER);
+  gyroReset(GYRO);
+  aStationaryAuton("red", 1);
 }

@@ -35,6 +35,7 @@ void testPIDDrive(int dDes)
 }
 
 int dDes;
+int gyDes;
 void aStationaryAuton(char cGtfo[], int iCone) {
   lift(127);
   mogo(127);
@@ -59,15 +60,58 @@ void aStationaryAuton(char cGtfo[], int iCone) {
   wait(250);
   lift(10);
   roller(0);
+  while(analogRead(MANI_POT) < 4095 || analogRead(MOGO_POT) > 75)
+  {
+  if(analogRead(MANI_POT) < 2600) mani(0);
+  if(analogRead(MOGO_POT) > 75) mogo(0);
+  }
   dDes = -200;
+  gyDes = 75;
   encoderReset(LEFT_ENCODER);
   encoderReset(RIGHT_ENCODER);
   driveTask = taskCreate(pidDrive, TASK_DEFAULT_STACK_SIZE, (void*)dDes, TASK_PRIORITY_DEFAULT);
+    while(driveGet() < dDes)
+  {
+    delay(15);
+  }
+  delay(500);
+  taskDelete(driveTask);
+  gyroReset(GYRO);
+  turnTask = taskCreate(pidRotate, TASK_DEFAULT_STACK_SIZE, (void*)gyDes, TASK_PRIORITY_DEFAULT);
+  while(gyroGet(GYRO) < gyDes)
+  {
+    delay(15);
+  }
+  delay(500);
+  taskDelete(turnTask);
+  encoderReset(LEFT_ENCODER);
+  encoderReset(RIGHT_ENCODER);
+  dDes = 100;
+  driveTask = taskCreate(pidDrive, TASK_DEFAULT_STACK_SIZE, (void*)dDes, TASK_PRIORITY_DEFAULT);
   
+    while(driveGet() < dDes)
+  {
+    delay(15);
+  }
+  delay(500);
+  taskDelete(turnTask);
+  lift(-127);
+  mani(-127);
+  roller(127);
+  while(analogRead(LIFT_POT) > 2845 || analogRead(MANI_POT) > 2600) 
+  {  
+    if(analogRead(LIFT_POT) < 2845) lift(10);
+    if(analogRead(MANI_POT) < 2600)
+    {
+      mani(-10);
+      roller(20);
+    } 
+    delay(20);
+  }
 }
 
 
-void mogoAutonMaster20(int choice)
+void mogoAutonMaster20(int choice) 
 {
     if(choice == 1)
     {

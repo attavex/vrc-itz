@@ -179,7 +179,6 @@ void operatorControl() {
 	rollerControl(bBtn8R, bBtn7L, bBtn8D);
 	baseLock(bBtn7R, bBtn7D, joyAxis3, joyAxis4); 
 	if(bBtn7U) autonomous();
-	
 	}
 	
 }

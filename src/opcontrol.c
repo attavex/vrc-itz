@@ -98,7 +98,7 @@ inline void maniControl(bool bBtnUp, bool bBtnDown)
 	}
 	else
 	{
-        maniOutput = -4;
+        maniOutput = 0;
 	}
 
 	
@@ -145,10 +145,10 @@ inline void baseLock(bool enableLock, bool disableLock, int speed, int turn)
 
 	if(baseLockOutput == 1)
 	{
-	    motorSet(DRIVE_LB, -30);
-	    motorSet(DRIVE_LF, -10);
-        motorSet(DRIVE_RB, 30);
-	    motorSet(DRIVE_RF, -10);
+	    motorSet(DRIVE_LB, -40);
+	    motorSet(DRIVE_LF, -30);
+        motorSet(DRIVE_RB, 40);
+	    motorSet(DRIVE_RF, -30); 
 	}
 	else if(baseLockOutput == 1 && (joystickGetAnalog(1, joyAxis3) == 1 || joystickGetAnalog(1, joyAxis4) == 1))
 	{
@@ -169,8 +169,8 @@ void operatorControl() {
      delay(20);
 	 lcdClear(uart1); 
 	 /*lcdPrint(uart1, 1, "Batt: %1.3f V", (double)powerLevelMain() / 1000);
-	 lcdPrint(uart1, 2, "Batt: %1.3f V", (double)analogRead(POWER_EXP) * 0.0456);*/
-	lcdPrint(uart1, 1, "MANI - %d", analogRead(MANI_POT));
+	 lcdPrint(uart1, 2, "Batt: %1.3f V", (double)analogRead(POWER_EXP) / 280);*/
+	lcdPrint(uart1, 1, "MOGO - %d", analogRead(MANI_POT));
 	lcdPrint(uart1, 2, "LIFT - %d", analogRead(LIFT_POT));
 	//driveControl(joyAxis3, joyAxis4);
 	mogoControl(bBtn8L, bBtn8U);

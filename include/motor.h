@@ -20,7 +20,6 @@
 #define LIFT_POT 2
 #define MANI_POT 3
 #define GYRO_PORT 5
-
 Gyro GYRO;
 
 // Bat Voltage (Power Exp)

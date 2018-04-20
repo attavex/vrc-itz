@@ -1,22 +1,4 @@
-/** @file API.h
- * @brief Provides the high-level user functionality intended for use by typical VEX Cortex
- * programmers.
- *
- * This file should be included for you in the predefined stubs in each new VEX Cortex PROS
- * project through the inclusion of "main.h". In any new C source file, it is advisable to
- * include main.h instead of referencing API.h by name, to better handle any nomenclature
- * changes to this file or its contents.
- *
- * Copyright (c) 2011-2016, Purdue University ACM SIGBots.
- * All rights reserved.
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- *
- * PROS contains FreeRTOS (http://www.freertos.org) whose source code may be
- * obtained from http://sourceforge.net/projects/freertos/files/ or on request.
- */
+
 
 #ifndef API_H_
 #define API_H_
@@ -27,7 +9,6 @@
 #include <stdarg.h>
 #include <stdint.h>
 
-// Begin C++ extern to C
 #ifdef __cplusplus
 extern "C" {
 #endif

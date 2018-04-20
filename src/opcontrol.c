@@ -168,9 +168,9 @@ void operatorControl() {
 	{
      delay(20);
 	 lcdClear(uart1); 
-	 /*lcdPrint(uart1, 1, "Batt: %1.3f V", (double)powerLevelMain() / 1000);
-	 lcdPrint(uart1, 2, "Batt: %1.3f V", (double)analogRead(POWER_EXP) / 280);*/
-	lcdPrint(uart1, 1, "MOGO - %d", analogRead(MANI_POT));
+	 //lcdPrint(uart1, 1, "Batt: %1.3f V", (double)powerLevelMain() / 1000);
+	 //lcdPrint(uart1, 2, "Batt: %1.3f V", (double)analogRead(POWER_EXP) / 280);
+	lcdPrint(uart1, 1, "MANI - %d", analogRead(MANI_POT));
 	lcdPrint(uart1, 2, "LIFT - %d", analogRead(LIFT_POT));
 	//driveControl(joyAxis3, joyAxis4);
 	mogoControl(bBtn8L, bBtn8U);
@@ -178,6 +178,7 @@ void operatorControl() {
 	maniControl(bBtn5U, bBtn5D);
 	rollerControl(bBtn8R, bBtn7L, bBtn8D);
 	baseLock(bBtn7R, bBtn7D, joyAxis3, joyAxis4); 
+	printf("MOGO - %d\n", analogRead(MOGO_POT));
 	if(bBtn7U) autonomous();
 	}
 	

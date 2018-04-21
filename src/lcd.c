@@ -24,12 +24,18 @@ void lcdAuton_Pages(int selectVal)
     }
     if (selectVal == 4)
     {
-        lcdSetText(uart1, 1, "   Prog Skill   ");
+        lcdSetText(uart1, 1, "    Blocking    ");
         lcdSetText(uart1, 2, "    [Select]    ");
     }
 }
 
 
+/**
+ * Global Variable Reminders
+ * Pos0 : Type of autonomous
+ * Pos1 : Cone quantity
+ * Pos2 : Direction
+**/
 void lcdAuton()
 {
     lcdSetBacklight(uart1, 1);
@@ -46,57 +52,66 @@ void lcdAuton()
             if (lcdReadButtons(uart1) == 1)
                 lcdAutonPage -= 1;
         }
+        else if(lcdReadButtons(uart1) == 1) {
+            lcdAutonPage = 0;
+            break;
+        }
         if (lcdReadButtons(uart1) == 2)
         {
             break;
         }
         if (lcdReadButtons(uart1) > 0)
         {
-            delay(500);
+            delay(250);
         }
         delay(10);
     }
-    lcdSetText(uart1, 1, "Selected.");
     selectAuton[0] = lcdAutonPage;
     if (selectAuton[0] == 1 || selectAuton[0] == 2 || selectAuton[0] == 3)
     {
-        if (selectAuton[0] == 1 || selectAuton[0] == 2)
+        if (selectAuton[0] == 1 || selectAuton[0] == 2 || selectAuton[0] == 3)
         {
             lcdSetText(uart1, 1, " Cone quantity? ");
-            lcdSetText(uart1, 2, "[2]          [3]");
+            lcdSetText(uart1, 2, "[1C]  [2C]  [3C]");
             while (true)
             {
-                if (lcdReadButtons(uart1) == 1)
+                if (lcdReadButtons(uart1) == 4)
                 {
                     lcdAutonPage = 1;
                     break;
                 }
-                else if (lcdReadButtons(uart1) == 4)
+                else if (lcdReadButtons(uart1) == 2)
                 {
                     lcdAutonPage = 2;
+                    break;
+                }
+                else if(lcdReadButtons(uart1) == 1) {
+                    lcdAutonPage = 3;
                     break;
                 }
                 delay(10);
             }
             selectAuton[1] = lcdAutonPage;
-            lcdSetText(uart1, 1, "   What side?   ");
-            lcdSetText(uart1, 2, "[R]          [B]");
-            wait(250);
-            while (true)
-            {
-                if (lcdReadButtons(uart1) == 1)
+            if(!(selectAuton[0] == 3)) { 
+                lcdSetText(uart1, 1, "   What side?   ");
+                lcdSetText(uart1, 2, "[R]          [B]");
+                wait(250);
+                while (true)
                 {
-                    lcdAutonPage = 1;
-                    break;
+                    if (lcdReadButtons(uart1) == 1)
+                    {
+                        lcdAutonPage = 1;
+                        break;
+                    }
+                    else if (lcdReadButtons(uart1) == 4)
+                    {
+                        lcdAutonPage = 2;
+                        break;
+                    }
+                    delay(10);
                 }
-                else if (lcdReadButtons(uart1) == 4)
-                {
-                    lcdAutonPage = 2;
-                    break;
-                }
-                delay(10);
+                selectAuton[2] = lcdAutonPage;
             }
-            selectAuton[2] = lcdAutonPage;
         }
         if (selectAuton[0] == 3)
         {
@@ -121,8 +136,7 @@ void lcdAuton()
                 }
                 delay(10);
             }
-            selectAuton[1] = lcdAutonPage;
-            selectAuton[2] = 0;
+            selectAuton[2] = lcdAutonPage;
         }
     }
 }

@@ -287,7 +287,26 @@ void mogoAutonMaster20(int choice)
     }
     else if(choice == 3)
     {
-        //insert red-side, 20 point, 3 cone auton
+      //insert red-side, 20 point, 3 cone auton
+    roller(20);
+    lift(127);
+    mogo(127);
+    driveSpeed(127);
+  while(analogRead(LIFT_POT) < 3500 || driveGet() < 400 || analogRead(MOGO_POT) < 1400) 
+  {  
+    if(analogRead(LIFT_POT) > 3500) lift(10);
+    if(analogRead(MOGO_POT) > 1400) mogo(40);
+    if(driveGet() > 400) driveSpeed(0);
+    delay(20);
+  }
+  mogo(-127);
+   while (analogRead(MOGO_POT) > 500)
+  {
+  if(analogRead(MOGO_POT) < 200) mogo(-5); roller(-127);
+  delay(20);
+  }
+
+
     }
     else if(choice == 4)
     {
@@ -320,17 +339,6 @@ void stationaryAuton()
     //insert stationary 3 cone auton
 }
 
-void progSkills()
-{
-    //insert prog skills 
-}
-
-
-
-
-
-
-
 
 
 
@@ -339,5 +347,6 @@ void autonomous()
   encoderReset(LEFT_ENCODER);
   encoderReset(RIGHT_ENCODER);
   gyroReset(GYRO);
-  aStationaryAuton("red", 1);
+  //aStationaryAuton("red", 1);
+  mogoAutonMaster20(3);
 }

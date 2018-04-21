@@ -63,11 +63,11 @@ inline void liftControl(bool bBtnUp, bool bBtnDown)
     {
         liftOutput = bBtnUp ? 127 : (bBtnDown ? -127 : 0);
         iArmDes = analogRead(LIFT_POT);
-    }
+    } /*
 	else if(analogRead(LIFT_POT) < 3500) 
 	{
 		liftOutput = -15;
-	}       
+	} */
     else
     {
         liftOutput = -iArmPID(iArmDes);

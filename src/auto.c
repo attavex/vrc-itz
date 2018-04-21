@@ -279,20 +279,21 @@ void mogoAutonMaster20(int choice)
 {
     if(choice == 1)
     {
-        //insert red-side, 20 point, 2 cone auton
+        //insert red-side, 20 point, 2 cone auton (RIGHT SIDE AUTON)
     }
     else if(choice == 2)
     {
-        //insert blue-side, 20 point, 2 cone auton
+        //insert blue-side, 20 point, 2 cone auton (LEFT SIDE AUTON)
     }
     else if(choice == 3)
     {
-      //insert red-side, 20 point, 3 cone auton
+      //insert red-side, 20 point, 3 cone auton (RIGHT SIDE AUTON)
+      //LIFT PULLS UP, MOGO GOES OUT/BOT DRIVES TO MOGO, AND ROLLER HOLDS CONE IN
     roller(20);
     lift(127);
     mogo(127);
     driveSpeed(127);
-  while(analogRead(LIFT_POT) < 3500 || driveGet() < 400 || analogRead(MOGO_POT) < 1400) 
+  while(analogRead(LIFT_POT) < 3450 || driveGet() < 400 || analogRead(MOGO_POT) < 1400) 
   {  
     if(analogRead(LIFT_POT) > 3500) lift(10);
     if(analogRead(MOGO_POT) > 1400) mogo(40);
@@ -302,15 +303,135 @@ void mogoAutonMaster20(int choice)
   mogo(-127);
    while (analogRead(MOGO_POT) > 500)
   {
-  if(analogRead(MOGO_POT) < 200) mogo(-5); roller(-127);
+  if(analogRead(MOGO_POT) < 200)
+  {
+    mogo(-5); 
+    roller(-127);//PRELOAD CONE DROPS ONTO MOGO
+  }  
   delay(20);
   }
+  //start of picking-up second cone
+  lift(-80);
+  mani(-127);
+  driveSpeed(127);
+  roller(127);
+  while(analogRead(LIFT_POT) < 3650 || analogRead(MANI_POT) > 2800 || driveGet() < 200) 
+  {  
+    if(analogRead(LIFT_POT) > 3700) lift(-10);
+    if(analogRead(MANI_POT) < 2800) mani(-10);
+    if(driveGet() > 50) driveSpeed(0);
+    delay(20);
+  }
+  //BRING UP MANI AND STACK SECOND CONE
+  mani(127);
+  lift(127);
+   while(analogRead(MANI_POT) < 3900 || analogRead(LIFT_POT) < 3500)
+  {
+  if(analogRead(MANI_POT) > 3800)
+  {
+    mani(0);
+    roller(-127);
+  } 
+  if(analogRead(LIFT_POT) > 3500) lift(10);
+  delay(20);
+  }
+  //START OF PICKING-UP THIRD CONE
+  lift(-80);
+  mani(-127);
+  driveSpeed(127);
+  roller(127);
+  while(analogRead(LIFT_POT) < 3650 || analogRead(MANI_POT) > 2800 || driveGet() < 200) 
+  {  
+    if(analogRead(LIFT_POT) > 3700) lift(-10);
+    if(analogRead(MANI_POT) < 2800) mani(-10);
+    if(driveGet() > 50) driveSpeed(0);
+    delay(20);
+  }
+  //BRING UP MANI AND STACK THIRD CONE/HEAD BACK TO SCORING ZONES
+  mani(127);
+  lift(127);
+  driveSpeed(-127);
+   while(analogRead(MANI_POT) < 3900 || analogRead(LIFT_POT) < 3500 || driveGet() > -400)
+  {
+  if(analogRead(MANI_POT) > 3800)
+  {
+    mani(0); 
+    roller(-127);
+  } 
+  if(analogRead(LIFT_POT) > 3500) lift(10);
+  if(driveGet() < -400) driveSpeed(0); 
+  delay(20);
+  }
+  //FIRST TURN TO LINE UP PARALLEL WITH SCORING BAR
+  gyDes = 110;
+  gyroReset(GYRO);
+  turnTask = taskCreate(pidRotate, TASK_DEFAULT_STACK_SIZE, (void*)gyDes, TASK_PRIORITY_DEFAULT);
+  while(gyroGet(GYRO) < gyDes)
+  {
+    delay(15);
+  }
+  delay(500);
+  taskDelete(turnTask);
+  motorStopAll();
+  //CENTER ON BAR (STILL PARALLEL)
+  dDes = -75;
+  encoderReset(LEFT_ENCODER);
+  encoderReset(RIGHT_ENCODER);
+  driveTask = taskCreate(pidDrive, TASK_DEFAULT_STACK_SIZE, (void*)dDes, TASK_PRIORITY_DEFAULT);
+    while(driveGet() > dDes)
+  {
+    delay(15);
+  }
+  delay(500);
+  taskDelete(driveTask);
+  motorStopAll();
+  //PERPINDICULAR TO BAR
+  gyDes = 90;
+  gyroReset(GYRO);
+  turnTask = taskCreate(pidRotate, TASK_DEFAULT_STACK_SIZE, (void*)gyDes, TASK_PRIORITY_DEFAULT);
+  while(gyroGet(GYRO) < gyDes)
+  {
+    delay(15);
+  }
+  delay(500);
+  taskDelete(turnTask);
+  motorStopAll();
+  //INSERT MOGO INTO 20 POINT ZONE
+  roller(-127);
+  lift(127);
+  mogo(127);
+  driveSpeed(127);
+  while(analogRead(LIFT_POT) > 2845 || analogRead(MOGO_POT) < 1400) 
+  {  
+    if(analogRead(LIFT_POT) < 2845) lift(10);
+    if(analogRead(MOGO_POT) > 1400)
+    {
+      mogo(20); 
+      driveSpeed(0);
+    } 
+    if(driveGet() > 200) driveSpeed(0);
+    delay(20);
+  }
+  //BACK UP AND END AUTON
+  mogo(-127);
+  driveSpeed(-127);
+  while(analogRead(MOGO_POT) > 500)
+  {
+  if(analogRead(MOGO_POT) < 200)
+  {
+     mogo(0); 
+     driveSpeed(0);
+  }
+  delay(20);
+  }
+  }
+  
 
 
-    }
+    
     else if(choice == 4)
     {
-        //insert blue-side, 20 point, 3 cone auton
+        //insert blue-side, 20 point, 3 cone auton (LEFT SIDE AUTON)
     }
 }
 

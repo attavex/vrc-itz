@@ -55,7 +55,7 @@ inline void mogoControl(bool bBtnUp, bool bBtnDown)
 }
 
 int liftOutput;	
-int iArmDes = 2900;
+int iArmDes = 325;
 //iArmDes = 200;
 inline void liftControl(bool bBtnUp, bool bBtnDown)
 {
@@ -70,7 +70,7 @@ inline void liftControl(bool bBtnUp, bool bBtnDown)
 	} */
     else
     {
-        liftOutput = -iArmPID(iArmDes);
+        liftOutput = iArmPID(iArmDes);
     }
 
     lift(liftOutput);
@@ -81,8 +81,8 @@ inline void maniControl(bool bBtnUp, bool bBtnDown)
 {
     if(bBtnUp)
 	{
-		//maniOutput = (3700 - analogRead(MANI_POT))/4;                         
-        maniOutput = 90;
+		maniOutput = (4000 - analogRead(MANI_POT))/8;                         
+       // maniOutput = 90;
     }
 	else if (bBtnDown)
 	{
@@ -120,7 +120,7 @@ inline void rollerControl(bool bBtnUp, bool bBtnDown, bool bBtnStop)
 	{
 		rollerOutput = 0;
 	}
-	else if(analogRead(MANI_POT) < 3200 && analogRead(LIFT_POT) > 3400) {
+	else if(analogRead(MANI_POT) < 3200 && analogRead(LIFT_POT) < 200) {
 		rollerOutput = 127;
 	}
 	else
@@ -164,21 +164,23 @@ inline void baseLock(bool enableLock, bool disableLock, int speed, int turn)
 }
 
 void operatorControl() {
+	encoderReset(LEFT_ENCODER);
+	encoderReset(RIGHT_ENCODER);
 	while (true) 
 	{
      delay(20);
 	 lcdClear(uart1); 
-	 //lcdPrint(uart1, 1, "Batt: %1.3f V", (double)powerLevelMain() / 1000);
-	 //lcdPrint(uart1, 2, "Batt: %1.3f V", (double)analogRead(POWER_EXP) / 280);
-	lcdPrint(uart1, 1, "MANI - %d", analogRead(MANI_POT));
-	lcdPrint(uart1, 2, "LIFT - %d", analogRead(LIFT_POT));
+	 lcdPrint(uart1, 1, "Batt: %1.3f V", (double)powerLevelMain() / 1000);
+	 lcdPrint(uart1, 2, "Batt: %1.3f V", (double)analogRead(POWER_EXP) / 280);
+	//lcdPrint(uart1, 1, "MANI - %d", analogRead(MANI_POT));
+	//lcdPrint(uart1, 2, "LIFT - %d", analogRead(LIFT_POT));
 	//driveControl(joyAxis3, joyAxis4);
 	mogoControl(bBtn8L, bBtn8U);
 	liftControl(bBtn6U, bBtn6D);
 	maniControl(bBtn5U, bBtn5D);
 	rollerControl(bBtn8R, bBtn7L, bBtn8D);
 	baseLock(bBtn7R, bBtn7D, joyAxis3, joyAxis4); 
-	printf("MOGO - %d\n", analogRead(MOGO_POT));
+	printf("%d\n", analogRead(LIFT_POT));
 	if(bBtn7U) autonomous();
 	}
 	

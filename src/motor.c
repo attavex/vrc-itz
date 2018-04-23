@@ -1,5 +1,10 @@
 #include "main.h"
 
+int driveGet() 
+{
+    return((encoderGet(LEFT_ENCODER) + encoderGet(RIGHT_ENCODER)) / 2);
+}
+
 void driveSpeed(int iSpeed)
 {
     motorSet(DRIVE_LB, -iSpeed);
@@ -49,7 +54,7 @@ int
 iArmPID( int iDes ) 
 {
 	sArmPID.kP         = 0.075;
-  sArmPID.kD         = 0.1;
+  sArmPID.kD         = 0.05;
 	sArmPID.current    = analogRead(LIFT_POT);
 	sArmPID.error      = iDes - sArmPID.current;
 	sArmPID.derivative = sArmPID.error - sArmPID.lastError;

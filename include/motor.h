@@ -64,3 +64,4 @@ void pidDrive(void * parameter);
 void pidRotate(void * parameter);
 void lcdAuton_Pages(int selectVal);
 void lcdAuton();
+int driveGet();

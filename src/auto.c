@@ -2,10 +2,7 @@
 
 TaskHandle driveTask, turnTask;
 
-int driveGet() 
-{
-    return((encoderGet(LEFT_ENCODER) + encoderGet(RIGHT_ENCODER)) / 2);
-}
+
 
 
 
@@ -280,90 +277,91 @@ void mogoAutonMaster20(int choice)
     if(choice == 1)
     {
         //insert red-side, 20 point, 2 cone auton (RIGHT SIDE AUTON)
-    }
-    else if(choice == 2)
-    {
-        //insert blue-side, 20 point, 2 cone auton (LEFT SIDE AUTON)
-    }
-    else if(choice == 3)
-    {
-      //insert red-side, 20 point, 3 cone auton (RIGHT SIDE AUTON)
-      //LIFT PULLS UP, MOGO GOES OUT/BOT DRIVES TO MOGO, AND ROLLER HOLDS CONE IN
     roller(20);
-    lift(127);
     mogo(127);
-    driveSpeed(127);
-  while(analogRead(LIFT_POT) < 3450 || driveGet() < 400 || analogRead(MOGO_POT) < 1400) 
+    lift(127);
+    while(analogRead(LIFT_POT) < 230 || analogRead(MOGO_POT) < 1700) 
   {  
-    if(analogRead(LIFT_POT) > 3500) lift(10);
-    if(analogRead(MOGO_POT) > 1400) mogo(40);
-    if(driveGet() > 400) driveSpeed(0);
+    if(analogRead(LIFT_POT) > 250) lift(10);
+    if(analogRead(MOGO_POT) > 1730) mogo(20);
     delay(20);
   }
+    
+    driveSpeed(127);
+  while(driveGet() < 1260) 
+  {  
+    if(driveGet() > 1260) driveSpeed(5);
+    delay(20);
+  }
+  driveSpeed(0);
+  //motorStopAll();
   mogo(-127);
-   while (analogRead(MOGO_POT) > 500)
+   while (analogRead(MOGO_POT) > 100)
   {
-  if(analogRead(MOGO_POT) < 200)
+  if(analogRead(MOGO_POT) < 90)
   {
     mogo(-5); 
-    roller(-127);//PRELOAD CONE DROPS ONTO MOGO
   }  
   delay(20);
   }
-  //start of picking-up second cone
-  lift(-80);
-  mani(-127);
-  driveSpeed(127);
-  roller(127);
-  while(analogRead(LIFT_POT) < 3650 || analogRead(MANI_POT) > 2800 || driveGet() < 200) 
+  
+  lift(-127);
+   while(analogRead(LIFT_POT) > 100) 
   {  
-    if(analogRead(LIFT_POT) > 3700) lift(-10);
-    if(analogRead(MANI_POT) < 2800) mani(-10);
-    if(driveGet() > 50) driveSpeed(0);
+    if(analogRead(LIFT_POT) < 130) lift(10);
     delay(20);
   }
+  roller(-127);//PRELOAD CONE DROPS ONTO MOGO
+  //start of picking-up second cone
+    encoderReset(LEFT_ENCODER);
+    encoderReset(RIGHT_ENCODER);
+    driveSpeed(127);
+  while(driveGet() < 100) 
+  {  
+    if(driveGet() > 105) driveSpeed(0);
+    delay(20);
+  }
+  driveSpeed(0);
+  motorStopAll();
+  lift(-80);
+  mani(-127);
+  roller(127);
+  while(analogRead(LIFT_POT) > 10 || analogRead(MANI_POT) > 2800) 
+  {  
+    if(analogRead(LIFT_POT) < 10) lift(-10);
+    if(analogRead(MANI_POT) < 2800) mani(-10);
+    delay(20);
+  }
+  wait(250);
   //BRING UP MANI AND STACK SECOND CONE
   mani(127);
   lift(127);
-   while(analogRead(MANI_POT) < 3900 || analogRead(LIFT_POT) < 3500)
+   while(analogRead(MANI_POT) < 3770 || analogRead(LIFT_POT) < 115)
   {
   if(analogRead(MANI_POT) > 3800)
   {
     mani(0);
-    roller(-127);
+    
   } 
-  if(analogRead(LIFT_POT) > 3500) lift(10);
+  if(analogRead(LIFT_POT) > 115) lift(10);
   delay(20);
   }
-  //START OF PICKING-UP THIRD CONE
-  lift(-80);
-  mani(-127);
-  driveSpeed(127);
-  roller(127);
-  while(analogRead(LIFT_POT) < 3650 || analogRead(MANI_POT) > 2800 || driveGet() < 200) 
+   lift(-127);
+   while(analogRead(LIFT_POT) > 100) 
   {  
-    if(analogRead(LIFT_POT) > 3700) lift(-10);
-    if(analogRead(MANI_POT) < 2800) mani(-10);
-    if(driveGet() > 50) driveSpeed(0);
+    if(analogRead(LIFT_POT) < 130) lift(10);
     delay(20);
   }
-  //BRING UP MANI AND STACK THIRD CONE/HEAD BACK TO SCORING ZONES
-  mani(127);
-  lift(127);
+  roller(-127);
+  //HEAD BACK TO SCORING ZONES
   driveSpeed(-127);
-   while(analogRead(MANI_POT) < 3900 || analogRead(LIFT_POT) < 3500 || driveGet() > -400)
+   while(driveGet() > -1275)
   {
-  if(analogRead(MANI_POT) > 3800)
-  {
-    mani(0); 
-    roller(-127);
-  } 
-  if(analogRead(LIFT_POT) > 3500) lift(10);
-  if(driveGet() < -400) driveSpeed(0); 
+  if(driveGet() < -1275) driveSpeed(0); 
   delay(20);
   }
   //FIRST TURN TO LINE UP PARALLEL WITH SCORING BAR
-  gyDes = 110;
+  gyDes = 135;
   gyroReset(GYRO);
   turnTask = taskCreate(pidRotate, TASK_DEFAULT_STACK_SIZE, (void*)gyDes, TASK_PRIORITY_DEFAULT);
   while(gyroGet(GYRO) < gyDes)
@@ -372,22 +370,18 @@ void mogoAutonMaster20(int choice)
   }
   delay(500);
   taskDelete(turnTask);
-  motorStopAll();
+  driveSpeed(0);
   //CENTER ON BAR (STILL PARALLEL)
-  dDes = -75;
   encoderReset(LEFT_ENCODER);
   encoderReset(RIGHT_ENCODER);
-  driveTask = taskCreate(pidDrive, TASK_DEFAULT_STACK_SIZE, (void*)dDes, TASK_PRIORITY_DEFAULT);
-    while(driveGet() > dDes)
+ driveSpeed(127);
+   while(driveGet() < 225)
   {
-    delay(15);
+  if(driveGet() > 225) driveSpeed(0); 
+  delay(20);
   }
-  delay(500);
-  taskDelete(driveTask);
-  motorStopAll();
   //PERPINDICULAR TO BAR
-  gyDes = 90;
-  gyroReset(GYRO);
+  gyDes = 225;
   turnTask = taskCreate(pidRotate, TASK_DEFAULT_STACK_SIZE, (void*)gyDes, TASK_PRIORITY_DEFAULT);
   while(gyroGet(GYRO) < gyDes)
   {
@@ -397,21 +391,22 @@ void mogoAutonMaster20(int choice)
   taskDelete(turnTask);
   motorStopAll();
   //INSERT MOGO INTO 20 POINT ZONE
+  driveSpeed(127);
+  wait(750);
   roller(-127);
   lift(127);
   mogo(127);
-  driveSpeed(127);
   while(analogRead(LIFT_POT) > 2845 || analogRead(MOGO_POT) < 1400) 
   {  
     if(analogRead(LIFT_POT) < 2845) lift(10);
     if(analogRead(MOGO_POT) > 1400)
     {
       mogo(20); 
-      driveSpeed(0);
-    } 
-    if(driveGet() > 200) driveSpeed(0);
+    }
     delay(20);
   }
+  wait(1000);
+  driveSpeed(0);
   //BACK UP AND END AUTON
   mogo(-127);
   driveSpeed(-127);
@@ -424,14 +419,10 @@ void mogoAutonMaster20(int choice)
   }
   delay(20);
   }
-  }
-  
-
-
-    
-    else if(choice == 4)
+    }
+    else if(choice == 2)
     {
-        //insert blue-side, 20 point, 3 cone auton (LEFT SIDE AUTON)
+        //insert blue-side, 20 point, 2 cone auton (LEFT SIDE AUTON)
     }
 }
 
@@ -469,5 +460,5 @@ void autonomous()
   encoderReset(RIGHT_ENCODER);
   gyroReset(GYRO);
   //aStationaryAuton("red", 1);
-  mogoAutonMaster20(3);
+  mogoAutonMaster20(1);
 }

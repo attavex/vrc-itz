@@ -126,7 +126,7 @@ inline void rollerControl(bool bBtnUp, bool bBtnDown, bool bBtnStop)
 	else
 	{	
 
-        rollerOutput = 15;
+        rollerOutput = 25;
 	}
 	roller(rollerOutput);
 }
@@ -180,7 +180,7 @@ void operatorControl() {
 	maniControl(bBtn5U, bBtn5D);
 	rollerControl(bBtn8R, bBtn7L, bBtn8D);
 	baseLock(bBtn7R, bBtn7D, joyAxis3, joyAxis4); 
-	printf("%d\n", analogRead(LIFT_POT));
+	printf("%d\n", gyroGet(GYRO));
 	if(bBtn7U) autonomous();
 	}
 	

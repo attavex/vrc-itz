@@ -94,7 +94,7 @@ void lcdAuton()
             selectAuton[1] = lcdAutonPage;
             if(!(selectAuton[0] == 3)) { 
                 lcdSetText(uart1, 1, "   What side?   ");
-                lcdSetText(uart1, 2, "[R]          [B]");
+                lcdSetText(uart1, 2, "[ML]         [O]");
                 wait(250);
                 while (true)
                 {

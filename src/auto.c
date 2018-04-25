@@ -276,7 +276,7 @@ void mogoAutonMaster20(int choice)
 {
     if(choice == 1)
     {
-        //insert red-side, 20 point, 2 cone auton (RIGHT SIDE AUTON)
+        //insert dominant(less cones(match loader))-side, 20 point, 2 cone auton
     roller(20);
     mogo(127);
     lift(127);
@@ -422,7 +422,7 @@ void mogoAutonMaster20(int choice)
     }
     else if(choice == 2)
     {
-        //insert blue-side, 20 point, 2 cone auton (LEFT SIDE AUTON)
+        //insert recessive(more cones)-side, 20 point, 2 cone auton
           roller(20);
     mogo(127);
     lift(127);
@@ -462,9 +462,9 @@ void mogoAutonMaster20(int choice)
     encoderReset(LEFT_ENCODER);
     encoderReset(RIGHT_ENCODER);
     driveSpeed(127);
-  while(driveGet() < 100) 
+  while(driveGet() < 105) 
   {  
-    if(driveGet() > 105) driveSpeed(0);
+    if(driveGet() > 110) driveSpeed(0);
     delay(20);
   }
   driveSpeed(0);
@@ -501,9 +501,9 @@ void mogoAutonMaster20(int choice)
   roller(-127);
   //HEAD BACK TO SCORING ZONES
   driveSpeed(-127);
-   while(driveGet() > -1275)
+   while(driveGet() > -1300)
   {
-  if(driveGet() < -1275) driveSpeed(0); 
+  if(driveGet() < -1300) driveSpeed(0); 
   delay(20);
   }
   //FIRST TURN TO LINE UP PARALLEL WITH SCORING BAR
@@ -572,8 +572,8 @@ void mogoAutonMaster5(int choice)
 {
     if(choice == 1)
     {
-        //insert red-side, 5 point, 3 cone auton
-       roller(20);
+        //insert dominant(less cones)-side, 5 point, 3 cone auton
+        roller(20);
     mogo(127);
     lift(127);
     while(analogRead(LIFT_POT) < 230 || analogRead(MOGO_POT) < 1700) 
@@ -611,6 +611,12 @@ void mogoAutonMaster5(int choice)
   //start of picking-up second cone
     encoderReset(LEFT_ENCODER);
     encoderReset(RIGHT_ENCODER);
+    lift(127);
+     while(analogRead(LIFT_POT) > 125) 
+  {  
+    if(analogRead(LIFT_POT) < 130) lift(10);
+    delay(20);
+  }
     driveSpeed(127);
   while(driveGet() < 100) 
   {  
@@ -632,65 +638,23 @@ void mogoAutonMaster5(int choice)
   //BRING UP MANI AND STACK SECOND CONE
   mani(127);
   lift(127);
-   while(analogRead(MANI_POT) < 3770 || analogRead(LIFT_POT) < 115)
+   while(analogRead(MANI_POT) < 3770 || analogRead(LIFT_POT) < 125)
   {
   if(analogRead(MANI_POT) > 3800)
   {
     mani(0);
     
   } 
-  if(analogRead(LIFT_POT) > 115) lift(10);
+  if(analogRead(LIFT_POT) > 125) lift(10);
   delay(20);
   }
    lift(-127);
-   while(analogRead(LIFT_POT) > 100) 
+   while(analogRead(LIFT_POT) > 125) 
   {  
     if(analogRead(LIFT_POT) < 130) lift(10);
     delay(20);
   }
   roller(-127);
-  //START OF PICKING-UP THIRD CONE
-  encoderReset(LEFT_ENCODER);
-    encoderReset(RIGHT_ENCODER);
-    driveSpeed(127);
-  while(driveGet() < 100) 
-  {  
-    if(driveGet() > 105) driveSpeed(0);
-    delay(20);
-  }
-  driveSpeed(0);
-  motorStopAll();
-  lift(-80);
-  mani(-127);
-  roller(127);
-  while(analogRead(LIFT_POT) > 10 || analogRead(MANI_POT) > 2800) 
-  {  
-    if(analogRead(LIFT_POT) < 10) lift(-10);
-    if(analogRead(MANI_POT) < 2800) mani(-10);
-    delay(20);
-  }
-  wait(250);
-  //BRING UP MANI AND STACK THIRD CONE
-  mani(127);
-  lift(127);
-   while(analogRead(MANI_POT) < 3770 || analogRead(LIFT_POT) < 115)
-  {
-  if(analogRead(MANI_POT) > 3800)
-  {
-    mani(0);
-    
-  } 
-  if(analogRead(LIFT_POT) > 115) lift(10);
-  delay(20);
-  }
-   lift(-127);
-   while(analogRead(LIFT_POT) > 100) 
-  {  
-    if(analogRead(LIFT_POT) < 130) lift(10);
-    delay(20);
-  }
-  roller(-127); 
-  //HEAD BACK TO SCORING ZONES
   driveSpeed(-127);
    while(driveGet() > -1225)
   {
@@ -732,12 +696,11 @@ void mogoAutonMaster5(int choice)
      mogo(0); 
      driveSpeed(0);
   }
-  delay(20);
-  }
+    }
     }
     else if(choice == 2)
     {
-         //insert blue-side, 5 point, 3 cone auton
+         //insert recessive(more cones)-side, 5 point, 3 cone auton
           roller(20);
     mogo(127);
     lift(127);
@@ -776,6 +739,12 @@ void mogoAutonMaster5(int choice)
   //start of picking-up second cone
     encoderReset(LEFT_ENCODER);
     encoderReset(RIGHT_ENCODER);
+    lift(127);
+     while(analogRead(LIFT_POT) > 125) 
+  {  
+    if(analogRead(LIFT_POT) < 130) lift(10);
+    delay(20);
+  }
     driveSpeed(127);
   while(driveGet() < 100) 
   {  
@@ -797,65 +766,23 @@ void mogoAutonMaster5(int choice)
   //BRING UP MANI AND STACK SECOND CONE
   mani(127);
   lift(127);
-   while(analogRead(MANI_POT) < 3770 || analogRead(LIFT_POT) < 115)
+   while(analogRead(MANI_POT) < 3770 || analogRead(LIFT_POT) < 125)
   {
   if(analogRead(MANI_POT) > 3800)
   {
     mani(0);
     
   } 
-  if(analogRead(LIFT_POT) > 115) lift(10);
+  if(analogRead(LIFT_POT) > 125) lift(10);
   delay(20);
   }
    lift(-127);
-   while(analogRead(LIFT_POT) > 100) 
+   while(analogRead(LIFT_POT) > 125) 
   {  
     if(analogRead(LIFT_POT) < 130) lift(10);
     delay(20);
   }
   roller(-127);
-  //START OF PICKING-UP THIRD CONE
-  encoderReset(LEFT_ENCODER);
-    encoderReset(RIGHT_ENCODER);
-    driveSpeed(127);
-  while(driveGet() < 100) 
-  {  
-    if(driveGet() > 105) driveSpeed(0);
-    delay(20);
-  }
-  driveSpeed(0);
-  motorStopAll();
-  lift(-80);
-  mani(-127);
-  roller(127);
-  while(analogRead(LIFT_POT) > 10 || analogRead(MANI_POT) > 2800) 
-  {  
-    if(analogRead(LIFT_POT) < 10) lift(-10);
-    if(analogRead(MANI_POT) < 2800) mani(-10);
-    delay(20);
-  }
-  wait(250);
-  //BRING UP MANI AND STACK THIRD CONE
-  mani(127);
-  lift(127);
-   while(analogRead(MANI_POT) < 3770 || analogRead(LIFT_POT) < 115)
-  {
-  if(analogRead(MANI_POT) > 3800)
-  {
-    mani(0);
-    
-  } 
-  if(analogRead(LIFT_POT) > 115) lift(10);
-  delay(20);
-  }
-   lift(-127);
-   while(analogRead(LIFT_POT) > 100) 
-  {  
-    if(analogRead(LIFT_POT) < 130) lift(10);
-    delay(20);
-  }
-  roller(-127); 
-  //HEAD BACK TO SCORING ZONES
   driveSpeed(-127);
    while(driveGet() > -1225)
   {
@@ -900,6 +827,7 @@ void mogoAutonMaster5(int choice)
 
     }
 }
+}
 
 void stationaryAuton()
 {
@@ -916,4 +844,5 @@ void autonomous()
   gyroReset(GYRO);
   //aStationaryAuton("red", 1);
   mogoAutonMaster20(1);
+  //mogoAutonMaster5(2);
 }

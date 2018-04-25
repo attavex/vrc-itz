@@ -19,16 +19,10 @@ void lcdAuton_Pages(int selectVal)
     }
     if (selectVal == 3)
     {
-        lcdSetText(uart1, 1, "   Stationary   ");
-        lcdSetText(uart1, 2, "    [Select]    ");
-    }
-    if (selectVal == 4)
-    {
         lcdSetText(uart1, 1, "    Blocking    ");
         lcdSetText(uart1, 2, "    [Select]    ");
     }
 }
-
 
 /**
  * Global Variable Reminders
@@ -69,30 +63,8 @@ void lcdAuton()
     selectAuton[0] = lcdAutonPage;
     if (selectAuton[0] == 1 || selectAuton[0] == 2 || selectAuton[0] == 3)
     {
-        if (selectAuton[0] == 1 || selectAuton[0] == 2 || selectAuton[0] == 3)
-        {
-            lcdSetText(uart1, 1, " Cone quantity? ");
-            lcdSetText(uart1, 2, "[1C]  [2C]  [3C]");
-            while (true)
-            {
-                if (lcdReadButtons(uart1) == 4)
-                {
-                    lcdAutonPage = 1;
-                    break;
-                }
-                else if (lcdReadButtons(uart1) == 2)
-                {
-                    lcdAutonPage = 2;
-                    break;
-                }
-                else if(lcdReadButtons(uart1) == 1) {
-                    lcdAutonPage = 3;
-                    break;
-                }
-                delay(10);
-            }
             selectAuton[1] = lcdAutonPage;
-            if(!(selectAuton[0] == 3)) { 
+            if(selectAuton[0] == 1 || selectAuton[0] == 2 || selectAuton[0] == 3) { 
                 lcdSetText(uart1, 1, "   What side?   ");
                 lcdSetText(uart1, 2, "[ML]         [O]");
                 wait(250);
@@ -112,33 +84,5 @@ void lcdAuton()
                 }
                 selectAuton[2] = lcdAutonPage;
             }
-        }
-        if (selectAuton[0] == 3)
-        {
-            lcdSetText(uart1, 1, "      GTFO      ");
-            lcdSetText(uart1, 2, "[L]   [NO]   [R]");
-            while (true)
-            {
-                if (lcdReadButtons(uart1) == 1)
-                {
-                    lcdAutonPage = 1;
-                    break;
-                }
-                if (lcdReadButtons(uart1) == 2)
-                {
-                    lcdAutonPage = 2;
-                    break;
-                }
-                if (lcdReadButtons(uart1) == 4)
-                {
-                    lcdAutonPage = 3;
-                    break;
-                }
-                delay(10);
-            }
-            selectAuton[2] = lcdAutonPage;
-        }
     }
 }
-
-

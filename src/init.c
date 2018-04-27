@@ -13,7 +13,7 @@ void initialize() {
   
 
   //Auton Choice
-  if(isEnabled == 0)
+  if(!isEnabled())
   {
     lcdAuton();
   }

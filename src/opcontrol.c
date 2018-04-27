@@ -81,18 +81,18 @@ inline void maniControl(bool bBtnUp, bool bBtnDown)
 {
     if(bBtnUp)
 	{
-		maniOutput = (4000 - analogRead(MANI_POT))/8;                         
+		maniOutput = (3800 - analogRead(MANI_POT))/6.25;                         
        // maniOutput = 90;
     }
 	else if (bBtnDown)
 	{
-		maniOutput = -90;
+		maniOutput = -127;
 	}
-	else if(analogRead(MANI_POT) > 3675)
+	else if(analogRead(MANI_POT) > 3400)
 	{
 		maniOutput = 15;
 	}
-	else if (analogRead(MANI_POT < 3200)) 
+	else if (analogRead(MANI_POT < 2200)) 
 	{
         maniOutput = -15;
 	}
@@ -180,7 +180,7 @@ void operatorControl() {
 	maniControl(bBtn5U, bBtn5D);
 	rollerControl(bBtn8R, bBtn7L, bBtn8D);
 	baseLock(bBtn7R, bBtn7D, joyAxis3, joyAxis4); 
-	printf("%d\n", gyroGet(GYRO));
+	printf("%d %d %d\n", analogRead(MOGO_POT), analogRead(LIFT_POT), analogRead(MANI_POT));
 	if(bBtn7U) autonomous();
 	}
 	

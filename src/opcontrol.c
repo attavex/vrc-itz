@@ -181,7 +181,5 @@ void operatorControl() {
 	rollerControl(bBtn8R, bBtn7L, bBtn8D);
 	baseLock(bBtn7R, bBtn7D, joyAxis3, joyAxis4); 
 	printf("%d %d %d\n", analogRead(MOGO_POT), analogRead(LIFT_POT), analogRead(MANI_POT));
-	if(bBtn7U) autonomous();
 	}
-	
 }

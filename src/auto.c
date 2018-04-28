@@ -163,9 +163,9 @@ void mogoAutonMaster20(int choice)
   roller(-127);
   lift(127);
   mogo(127);
-  while(analogRead(LIFT_POT) > 2845 || analogRead(MOGO_POT) < 1400) 
+  while(analogRead(LIFT_POT) > 300 || analogRead(MOGO_POT) < 1400) 
   {  
-    if(analogRead(LIFT_POT) < 2845) lift(10);
+    if(analogRead(LIFT_POT) < 300) lift(10);
     if(analogRead(MOGO_POT) > 1400)
     {
       mogo(20); 
@@ -274,6 +274,7 @@ void mogoAutonMaster20(int choice)
   }
   roller(-127);
   driveSpeed(-127);
+  roller(26);
    while(driveGet() > -1275)
   {
   if(driveGet() < -1275) driveSpeed(0); 
@@ -315,9 +316,9 @@ void mogoAutonMaster20(int choice)
   roller(-127);
   lift(127);
   mogo(127);
-  while(analogRead(LIFT_POT) > 2845 || analogRead(MOGO_POT) < 1400) 
+  while(analogRead(LIFT_POT) < 300 || analogRead(MOGO_POT) < 1400) 
   {  
-    if(analogRead(LIFT_POT) < 2845) lift(10);
+    if(analogRead(LIFT_POT) > 300) lift(10);
     if(analogRead(MOGO_POT) > 1400)
     {
       mogo(20); 
